@@ -1,5 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.*;
 
@@ -26,11 +28,16 @@ public class Immeuble {
 
     // 🔗 Composition: 1 Immeuble owns 1..* Logements
     @OneToMany(mappedBy = "immeuble", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Logement> logements = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_residency", nullable = false)
     private Residency residency;
+
+    @OneToMany(mappedBy="immeuble")
+    @JsonManagedReference
+    private List<Annonce> annonces = new ArrayList<>();
 
 
     // Constructors
@@ -137,5 +144,8 @@ public class Immeuble {
         this.residency = residency;
     }
 
+    public List<Annonce> getAnnonces() {return annonces;}
+
+    public void setAnnonces(List<Annonce> annonces) {this.annonces = annonces;}
 }
 

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/proprietaires")
+@CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
 public class ProprietaireController {
 
     @Autowired

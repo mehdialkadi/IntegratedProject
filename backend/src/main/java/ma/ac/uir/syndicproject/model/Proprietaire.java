@@ -1,5 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.*;
 
@@ -8,6 +10,7 @@ import java.util.*;
 public class Proprietaire extends Utilisateur {
 
     @OneToMany(mappedBy = "proprietaire", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Logement> logements = new ArrayList<>();
 
     // Constructors

@@ -29,4 +29,6 @@ public class LogementService {
     public void deleteLogement(Long id) {
         logementRepository.deleteById(id);
     }
+
+    public Logement findByLocataire(Long locataireId){return logementRepository.findByLocataireId(locataireId);}
 }

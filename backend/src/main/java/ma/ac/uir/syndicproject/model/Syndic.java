@@ -1,5 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.*;
 
@@ -8,6 +10,7 @@ import java.util.*;
 public class Syndic extends Utilisateur {
 
     @OneToMany(mappedBy = "syndic", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Immeuble> immeubles = new ArrayList<>();
 
     // Constructors

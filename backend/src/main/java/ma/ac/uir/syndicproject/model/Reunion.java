@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class Reunion {
 
     // 🔗 Each réunion is linked to one immeuble
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_immeuble", nullable = false)
     private Immeuble immeuble;
 

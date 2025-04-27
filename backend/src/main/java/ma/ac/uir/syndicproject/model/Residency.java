@@ -1,5 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.*;
 
@@ -15,6 +17,7 @@ public class Residency {
     private String adresse;
 
     @OneToMany(mappedBy = "residency", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Immeuble> immeubles = new ArrayList<>();
 
     // Constructors

@@ -29,4 +29,6 @@ public class LocataireService {
     public void deleteLocataire(Long id) {
         locataireRepository.deleteById(id);
     }
+
+    public Locataire findLocataireByEmailAndPassword(String email, String password){return locataireRepository.findByEmailAndPassword(email, password);}
 }

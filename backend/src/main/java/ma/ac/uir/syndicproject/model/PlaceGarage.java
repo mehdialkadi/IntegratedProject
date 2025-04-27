@@ -1,6 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class PlaceGarage {
     private String statut;  // <- back to String
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_immeuble", nullable = false)
     private Immeuble immeuble;
 

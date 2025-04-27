@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/residencies")
+@CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
 public class ResidencyController {
 
     @Autowired

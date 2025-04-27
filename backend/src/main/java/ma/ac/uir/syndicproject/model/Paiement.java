@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class Paiement {
 
     // 🔗 Many paiements belong to one logement
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_logement", nullable = false)
     private Logement logement;
 

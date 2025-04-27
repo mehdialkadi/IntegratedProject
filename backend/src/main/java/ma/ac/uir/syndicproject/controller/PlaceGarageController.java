@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/places-garage")
+@CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
 public class PlaceGarageController {
 
     @Autowired

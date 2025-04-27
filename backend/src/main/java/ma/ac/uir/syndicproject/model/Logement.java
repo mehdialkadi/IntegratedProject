@@ -1,5 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class Logement {
     // 🔗 Relationships
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_proprio")
     private Proprietaire proprietaire;
 
@@ -33,6 +36,7 @@ public class Logement {
     private Locataire locataire;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_immeuble")
     private Immeuble immeuble;
 
@@ -41,6 +45,7 @@ public class Logement {
     private PlaceGarage placeGarage;
 
     @OneToMany(mappedBy = "logement", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Paiement> paiements = new ArrayList<>();
 
 

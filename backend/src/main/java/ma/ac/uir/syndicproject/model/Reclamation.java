@@ -1,6 +1,10 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,27 +22,29 @@ public class Reclamation {
 
     private String etat;
 
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @CreationTimestamp
+    @Column(name = "date", updatable = false)
+    private LocalDate date;
 
     // 🔗 Reclamation made by a user (propriétaire or locataire)
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_utilisateur", nullable = false)
     private Utilisateur utilisateur;
 
     // 🔗 Reclamation is about a logement
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_logement", nullable = false)
     private Logement logement;
 
     // Constructors
     public Reclamation() {}
 
-    public Reclamation(String titre, String description, String etat, Date date, Utilisateur utilisateur, Logement logement) {
+    public Reclamation(String titre, String description, String etat, Utilisateur utilisateur, Logement logement) {
         this.titre = titre;
         this.description = description;
         this.etat = etat;
-        this.date = date;
         this.utilisateur = utilisateur;
         this.logement = logement;
     }
@@ -74,14 +80,6 @@ public class Reclamation {
 
     public void setEtat(String etat) {
         this.etat = etat;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Utilisateur getUtilisateur() {
