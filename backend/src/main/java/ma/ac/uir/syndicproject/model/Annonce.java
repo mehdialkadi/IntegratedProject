@@ -1,6 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -22,14 +23,14 @@ public class Annonce {
 
     // 🔗 Each annonce is for one immeuble
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_immeuble", nullable = false)
+    @JsonBackReference("immeuble-annonces")
     private Immeuble immeuble;
 
     // 🔗 Each annonce is created by one utilisateur (admin/syndic)
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_utilisateur", nullable = false)
+    @JsonBackReference("utilisateur-annonces")
     private Utilisateur utilisateur;
 
     // Constructors

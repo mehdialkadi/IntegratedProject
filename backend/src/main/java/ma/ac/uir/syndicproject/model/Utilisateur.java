@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.*;
@@ -17,11 +18,11 @@ public class Utilisateur {
     private String password;
 
     @OneToMany(mappedBy="utilisateur")
-    @JsonManagedReference
+    @JsonManagedReference("utilisateur-annonces")
     private List<Annonce> annonces = new ArrayList<>();
 
     @OneToMany(mappedBy="utilisateur")
-    @JsonManagedReference
+    @JsonManagedReference("utilisateur-relamations")
     private List<Reclamation> reclamations = new ArrayList<>();
 
     public Utilisateur() {

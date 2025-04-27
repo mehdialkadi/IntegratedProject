@@ -28,14 +28,14 @@ public class Reclamation {
 
     // 🔗 Reclamation made by a user (propriétaire or locataire)
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_utilisateur", nullable = false)
+    @JsonBackReference("utilisateur-relamations")
     private Utilisateur utilisateur;
 
     // 🔗 Reclamation is about a logement
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_logement", nullable = false)
+    @JsonBackReference("reclamations-logement")
     private Logement logement;
 
     // Constructors

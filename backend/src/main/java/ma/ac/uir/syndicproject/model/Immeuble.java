@@ -1,6 +1,7 @@
 package ma.ac.uir.syndicproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,38 +25,38 @@ public class Immeuble {
 
     // 🔗 Syndic (many immeubles can belong to one syndic)
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_syndic", nullable = false)
+    @JsonBackReference("syndic-immeuble")
     private Syndic syndic;
 
     // 🔗 Composition: 1 Immeuble owns 1..* Logements
     @OneToMany(mappedBy = "immeuble", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("logements-immeuble")
     private List<Logement> logements = new ArrayList<>();
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_residency", nullable = false)
+    @JsonBackReference("residence-immeuble")
     private Residency residency;
 
     @OneToMany(mappedBy="immeuble")
-    @JsonManagedReference
+    @JsonManagedReference("immeuble-annonces")
     private List<Annonce> annonces = new ArrayList<>();
 
     @OneToMany(mappedBy="immeuble")
-    @JsonManagedReference
+    @JsonManagedReference("documents-immeuble")
     private List<DocumentCommun> documents = new ArrayList<>();
 
     @OneToMany(mappedBy="immeuble")
-    @JsonManagedReference
+    @JsonManagedReference("factures-immeuble")
     private List<FactureImmeuble> factures = new ArrayList<>();
 
     @OneToMany(mappedBy="immeuble")
-    @JsonManagedReference
+    @JsonManagedReference("garage-immeuble")
     private List<PlaceGarage> placesGarage = new ArrayList<>();
 
     @OneToMany(mappedBy="immeuble")
-    @JsonManagedReference
+    @JsonManagedReference("reunions-immeuble")
     private List<Reunion> reunions = new ArrayList<>();
 
     // Constructors

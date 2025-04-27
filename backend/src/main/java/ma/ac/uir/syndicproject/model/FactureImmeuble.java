@@ -28,8 +28,8 @@ public class FactureImmeuble {
 
     // 🔗 Many factures belong to one immeuble
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_immeuble", nullable = false)
+    @JsonBackReference("factures-immeuble")
     private Immeuble immeuble;
 
     // Constructors

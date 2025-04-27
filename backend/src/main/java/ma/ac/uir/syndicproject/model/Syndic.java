@@ -10,7 +10,7 @@ import java.util.*;
 public class Syndic extends Utilisateur {
 
     @OneToMany(mappedBy = "syndic", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("syndic-immeuble")
     private List<Immeuble> immeubles = new ArrayList<>();
 
     // Constructors

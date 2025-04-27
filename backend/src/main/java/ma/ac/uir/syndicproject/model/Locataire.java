@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Locataire extends Utilisateur {
 
     @OneToOne(mappedBy = "locataire")
-    @JsonBackReference
+    @JsonManagedReference("logement-locataire")
     private Logement logement;
 
     public Locataire() {}

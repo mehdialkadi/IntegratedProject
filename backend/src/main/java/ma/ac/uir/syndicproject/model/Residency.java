@@ -17,7 +17,7 @@ public class Residency {
     private String adresse;
 
     @OneToMany(mappedBy = "residency", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("residence-immeuble")
     private List<Immeuble> immeubles = new ArrayList<>();
 
     // Constructors

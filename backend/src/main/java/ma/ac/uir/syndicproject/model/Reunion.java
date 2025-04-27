@@ -25,8 +25,8 @@ public class Reunion {
 
     // 🔗 Each réunion is linked to one immeuble
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_immeuble", nullable = false)
+    @JsonBackReference("reunions-immeuble")
     private Immeuble immeuble;
 
     // Constructors

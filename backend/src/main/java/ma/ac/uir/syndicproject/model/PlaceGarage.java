@@ -2,6 +2,7 @@ package ma.ac.uir.syndicproject.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,11 +17,12 @@ public class PlaceGarage {
     private String statut;  // <- back to String
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_immeuble", nullable = false)
+    @JsonBackReference("garage-immeuble")
     private Immeuble immeuble;
 
     @OneToOne(mappedBy = "placeGarage")
+    @JsonManagedReference("garage-logement")
     private Logement logement;
 
     // Constructors

@@ -10,7 +10,7 @@ import java.util.*;
 public class Proprietaire extends Utilisateur {
 
     @OneToMany(mappedBy = "proprietaire", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("proprio-logement")
     private List<Logement> logements = new ArrayList<>();
 
     // Constructors

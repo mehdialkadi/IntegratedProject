@@ -26,29 +26,31 @@ public class Logement {
     // 🔗 Relationships
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_proprio")
+    @JsonBackReference("proprio-logement")
     private Proprietaire proprietaire;
 
     @OneToOne
     @JoinColumn(name = "id_locataire", unique = true)
+    @JsonBackReference("logement-locataire")
     private Locataire locataire;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_immeuble")
+    @JsonBackReference("logements-immeuble")
     private Immeuble immeuble;
 
     @OneToOne
     @JoinColumn(name = "id_place_garage", unique = true)
+    @JsonBackReference("garage-logement")
     private PlaceGarage placeGarage;
 
     @OneToMany(mappedBy = "logement", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("paiements-logement")
     private List<Paiement> paiements = new ArrayList<>();
 
     @OneToMany(mappedBy="logement")
-    @JsonManagedReference
+    @JsonManagedReference("reclamations-logement")
     private List<Reclamation> reclamations = new ArrayList<>();
 
     // Constructors

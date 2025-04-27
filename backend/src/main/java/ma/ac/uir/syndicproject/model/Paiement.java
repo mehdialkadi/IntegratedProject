@@ -23,8 +23,8 @@ public class Paiement {
 
     // 🔗 Many paiements belong to one logement
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_logement", nullable = false)
+    @JsonBackReference("paiements-logement")
     private Logement logement;
 
     // Constructors

@@ -21,7 +21,7 @@ public class DocumentCommun {
 
     // 🔗 Linked to one immeuble
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("documents-immeuble")
     @JoinColumn(name = "id_immeuble", nullable = false)
     private Immeuble immeuble;
 
