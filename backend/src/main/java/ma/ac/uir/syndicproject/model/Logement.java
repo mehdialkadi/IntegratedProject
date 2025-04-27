@@ -32,7 +32,6 @@ public class Logement {
 
     @OneToOne
     @JoinColumn(name = "id_locataire", unique = true)
-    @JsonManagedReference
     private Locataire locataire;
 
     @ManyToOne
@@ -48,6 +47,9 @@ public class Logement {
     @JsonManagedReference
     private List<Paiement> paiements = new ArrayList<>();
 
+    @OneToMany(mappedBy="logement")
+    @JsonManagedReference
+    private List<Reclamation> reclamations = new ArrayList<>();
 
     // Constructors
     public Logement() {}
@@ -125,4 +127,7 @@ public class Logement {
         this.paiements = paiements;
     }
 
+    public List<Reclamation> getReclamations() {return reclamations;}
+
+    public void setReclamations(List<Reclamation> reclamations) {this.reclamations = reclamations;}
 }

@@ -21,4 +21,3 @@ public class Locataire extends Utilisateur {
         this.logement = logement;
     }
 }
-

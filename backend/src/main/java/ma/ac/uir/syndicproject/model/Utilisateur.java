@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.*;
 
@@ -14,6 +15,14 @@ public class Utilisateur {
     private String prenom;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy="utilisateur")
+    @JsonManagedReference
+    private List<Annonce> annonces = new ArrayList<>();
+
+    @OneToMany(mappedBy="utilisateur")
+    @JsonManagedReference
+    private List<Reclamation> reclamations = new ArrayList<>();
 
     public Utilisateur() {
     }
@@ -63,6 +72,14 @@ public class Utilisateur {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Annonce> getAnnonces() {return annonces;}
+
+    public void setAnnonces(List<Annonce> annonces) {this.annonces = annonces;}
+
+    public List<Reclamation> getReclamations() {return reclamations;}
+
+    public void setReclamations(List<Reclamation> reclamations) {this.reclamations = reclamations;}
 
     @Override
     public String toString() {

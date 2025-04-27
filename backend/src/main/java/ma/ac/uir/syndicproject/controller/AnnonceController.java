@@ -1,7 +1,11 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Annonce;
+import ma.ac.uir.syndicproject.model.Locataire;
+import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.service.AnnonceService;
+import ma.ac.uir.syndicproject.service.LogementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +19,7 @@ public class AnnonceController {
 
     @Autowired
     private AnnonceService annonceService;
+    private LogementService logementService;
 
     @GetMapping
     public List<Annonce> getAllAnnonces() {
@@ -40,5 +45,16 @@ public class AnnonceController {
     @DeleteMapping("/{id}")
     public void deleteAnnonce(@PathVariable Long id) {
         annonceService.deleteAnnonce(id);
+    }
+
+    @GetMapping("/getLastThreeAnnonce")
+    public List<String> getLastThreeAnnonce(HttpSession session) {
+        Locataire me = (Locataire) session.getAttribute("currentUser");
+
+        Logement monLogement = logementService.findByLocataire(me.getId());
+
+        Long immeubleId = monLogement.getImmeuble().getId();
+
+        return annonceService.findTodayTitlesByImmeubleId(immeubleId);
     }
 }

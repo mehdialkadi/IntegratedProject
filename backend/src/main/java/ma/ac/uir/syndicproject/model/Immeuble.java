@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -23,6 +24,7 @@ public class Immeuble {
 
     // 🔗 Syndic (many immeubles can belong to one syndic)
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_syndic", nullable = false)
     private Syndic syndic;
 
@@ -32,6 +34,7 @@ public class Immeuble {
     private List<Logement> logements = new ArrayList<>();
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_residency", nullable = false)
     private Residency residency;
 
@@ -39,6 +42,21 @@ public class Immeuble {
     @JsonManagedReference
     private List<Annonce> annonces = new ArrayList<>();
 
+    @OneToMany(mappedBy="immeuble")
+    @JsonManagedReference
+    private List<DocumentCommun> documents = new ArrayList<>();
+
+    @OneToMany(mappedBy="immeuble")
+    @JsonManagedReference
+    private List<FactureImmeuble> factures = new ArrayList<>();
+
+    @OneToMany(mappedBy="immeuble")
+    @JsonManagedReference
+    private List<PlaceGarage> placesGarage = new ArrayList<>();
+
+    @OneToMany(mappedBy="immeuble")
+    @JsonManagedReference
+    private List<Reunion> reunions = new ArrayList<>();
 
     // Constructors
     public Immeuble() {}
@@ -147,5 +165,21 @@ public class Immeuble {
     public List<Annonce> getAnnonces() {return annonces;}
 
     public void setAnnonces(List<Annonce> annonces) {this.annonces = annonces;}
+
+    public List<DocumentCommun> getDocuments() {return documents;}
+
+    public void setDocuments(List<DocumentCommun> documents) {this.documents = documents;}
+
+    public List<FactureImmeuble> getFactures() {return factures;}
+
+    public void setFactures(List<FactureImmeuble> factures) {this.factures = factures;}
+
+    public List<PlaceGarage> getPlacesGarage() {return placesGarage;}
+
+    public void setPlacesGarage(List<PlaceGarage> placesGarage) {this.placesGarage = placesGarage;}
+
+    public List<Reunion> getReunions() {return reunions;}
+
+    public void setReunions(List<Reunion> reunions) {this.reunions = reunions;}
 }
 
