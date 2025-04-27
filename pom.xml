@@ -97,6 +97,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>ma.ac.uir.syndicproject.SyndicProjectApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

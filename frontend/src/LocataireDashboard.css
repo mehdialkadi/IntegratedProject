@@ -1,0 +1,100 @@
+/* full‐screen background */
+.dashboard-container {
+    background: url(./assets/background.png) no-repeat center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Irish Grover';
+    font-size: 22px;
+}
+
+/* translucent info panel */
+.info-panel {
+    position: relative;
+    background-color: rgba(217, 217, 217, 0.89);
+    padding: 118px 32px 32px;
+    /* ↑ bumped top padding from 32px to 48px */
+    width: 800px;
+    height: 600px;
+}
+
+/* logout icon in top‐right */
+.logout-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* each label/value pair */
+.field {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0 16px;
+    /* ↑ 8px top, 16px bottom */
+}
+
+.label {
+    font-weight: 400;
+}
+
+.value {
+    /* you can style the value differently if desired */
+}
+
+/* annonces section */
+.annonces {
+    position: absolute;
+    /* position at bottom-left */
+    bottom: 91px;
+    left: 50px;
+    margin-top: 0;
+    /* remove previous top margin */
+}
+
+.annonces-heading {
+    cursor: pointer;
+    /* optional hover effect */
+}
+
+.annonces-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    /* small top margin beneath the clickable heading */
+}
+
+.annonces h3 {
+    margin-bottom: 8px;
+}
+
+.annonces ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.annonces li {
+    margin-bottom: 4px;
+}
+
+/* history button */
+.history-button {
+    position: absolute;
+    /* position at bottom-right */
+    bottom: 100px;
+    right: 16px;
+    margin-top: 0;
+    /* remove previous top margin */
+    padding: 12px 24px;
+    background-color: #d9a67a;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Irish Grover';
+    font-size: 20px;
+}
