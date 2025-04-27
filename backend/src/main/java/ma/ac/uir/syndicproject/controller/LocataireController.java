@@ -4,7 +4,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Locataire;
-import ma.ac.uir.syndicproject.model.SimpleLogin;
 import ma.ac.uir.syndicproject.service.LocataireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
