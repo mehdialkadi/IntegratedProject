@@ -2,6 +2,7 @@ package ma.ac.uir.syndicproject.controller;
 
 import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Annonce;
+import ma.ac.uir.syndicproject.model.Immeuble;
 import ma.ac.uir.syndicproject.model.Locataire;
 import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.service.AnnonceService;
@@ -57,4 +58,11 @@ public class AnnonceController {
 
         return annonceService.findTodayTitlesByImmeubleId(immeubleId);
     }
+
+    @GetMapping("/immeubles")
+    public List<Immeuble> getAllImmeubles() {
+        return annonceService.getAllImmeubles();
+    }
 }
+    // Créer une nouvelle annonce
+

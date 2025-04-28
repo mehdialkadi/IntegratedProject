@@ -29,4 +29,15 @@ public class SyndicService {
     public void deleteSyndic(Long id) {
         syndicRepository.deleteById(id);
     }
+    public Syndic authenticateSyndic(String email, String password) {
+        // Rechercher un syndic par email
+        Syndic syndic = syndicRepository.findByEmail(email);
+
+        // Vérifier si le syndic existe et si le mot de passe est correct
+        if (syndic != null && syndic.getPassword().equals(password)) {
+            return syndic;  // Connexion réussie
+        }
+
+        return null;  // Connexion échouée
+    }
 }

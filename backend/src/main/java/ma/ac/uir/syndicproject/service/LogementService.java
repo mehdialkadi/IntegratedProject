@@ -1,7 +1,7 @@
 package ma.ac.uir.syndicproject.service;
 
-import ma.ac.uir.syndicproject.model.Logement;
-import ma.ac.uir.syndicproject.repository.LogementRepository;
+import ma.ac.uir.syndicproject.model.*;
+import ma.ac.uir.syndicproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,4 +31,53 @@ public class LogementService {
     }
 
     public Logement findByLocataire(Long locataireId){return logementRepository.findByLocataireId(locataireId);}
+
+
+    @Autowired
+    private ProprietaireRepository proprietaireRepository;
+
+    @Autowired
+    private LocataireRepository locataireRepository;
+
+    @Autowired
+    private ImmeubleRepository immeubleRepository;
+
+    @Autowired
+    private PlaceGarageRepository placeGarageRepository;
+
+    public Logement createLogement(Logement logement) {
+        return logementRepository.save(logement);
+    }
+
+    public List<Proprietaire> getAllProprietaires() {
+        return proprietaireRepository.findAll();
+    }
+
+    public List<Locataire> getAllLocataires() {
+        return locataireRepository.findAll();
+    }
+
+    public List<Immeuble> getAllImmeubles() {
+        return immeubleRepository.findAll();
+    }
+
+    public List<PlaceGarage> getAllPlacesGarage() {
+        return placeGarageRepository.findAll();
+    }
+
+    public Optional<Proprietaire> getProprietaireById(Long id) {
+        return proprietaireRepository.findById(id);
+    }
+
+    public Optional<Locataire> getLocataireById(Long id) {
+        return locataireRepository.findById(id);
+    }
+
+    public Optional<Immeuble> getImmeubleById(Long id) {
+        return immeubleRepository.findById(id);
+    }
+
+    public Optional<PlaceGarage> getPlaceGarageById(Long id) {
+        return placeGarageRepository.findById(id);
+    }
 }

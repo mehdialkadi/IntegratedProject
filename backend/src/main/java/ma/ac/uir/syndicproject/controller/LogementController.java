@@ -1,44 +1,57 @@
 package ma.ac.uir.syndicproject.controller;
 
 import ma.ac.uir.syndicproject.model.Logement;
+import ma.ac.uir.syndicproject.model.Proprietaire;
+import ma.ac.uir.syndicproject.model.Locataire;
+import ma.ac.uir.syndicproject.model.Immeuble;
+import ma.ac.uir.syndicproject.model.PlaceGarage;
 import ma.ac.uir.syndicproject.service.LogementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/logements")
-@CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
+@RequestMapping("/api/logement")
 public class LogementController {
 
     @Autowired
     private LogementService logementService;
 
-    @GetMapping
-    public List<Logement> getAllLogements() {
-        return logementService.getAllLogements();
-    }
-
-    @GetMapping("/{id}")
-    public Optional<Logement> getLogementById(@PathVariable Long id) {
-        return logementService.getLogementById(id);
-    }
-
+    // Endpoint pour créer un logement
     @PostMapping
-    public Logement createLogement(@RequestBody Logement logement) {
-        return logementService.saveLogement(logement);
+    public ResponseEntity<Logement> createLogement(@RequestBody Logement logement) {
+        Logement savedLogement = logementService.createLogement(logement);
+        return new ResponseEntity<>(savedLogement, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public Logement updateLogement(@PathVariable Long id, @RequestBody Logement logement) {
-        logement.setIdLogement(id);
-        return logementService.saveLogement(logement);
+    // Endpoint pour obtenir la liste des propriétaires
+    @GetMapping("/proprietaires")
+    public ResponseEntity<List<Proprietaire>> getAllProprietaires() {
+        List<Proprietaire> proprietaires = logementService.getAllProprietaires();
+        return new ResponseEntity<>(proprietaires, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteLogement(@PathVariable Long id) {
-        logementService.deleteLogement(id);
+    // Endpoint pour obtenir la liste des locataires
+    @GetMapping("/locataires")
+    public ResponseEntity<List<Locataire>> getAllLocataires() {
+        List<Locataire> locataires = logementService.getAllLocataires();
+        return new ResponseEntity<>(locataires, HttpStatus.OK);
+    }
+
+    // Endpoint pour obtenir la liste des immeubles
+    @GetMapping("/immeubles")
+    public ResponseEntity<List<Immeuble>> getAllImmeubles() {
+        List<Immeuble> immeubles = logementService.getAllImmeubles();
+        return new ResponseEntity<>(immeubles, HttpStatus.OK);
+    }
+
+    // Endpoint pour obtenir la liste des places de garage
+    @GetMapping("/places-garage")
+    public ResponseEntity<List<PlaceGarage>> getAllPlacesGarage() {
+        List<PlaceGarage> placesGarage = logementService.getAllPlacesGarage();
+        return new ResponseEntity<>(placesGarage, HttpStatus.OK);
     }
 }

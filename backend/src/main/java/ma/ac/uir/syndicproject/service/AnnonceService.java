@@ -1,7 +1,9 @@
 package ma.ac.uir.syndicproject.service;
 
 import ma.ac.uir.syndicproject.model.Annonce;
+import ma.ac.uir.syndicproject.model.Immeuble;
 import ma.ac.uir.syndicproject.repository.AnnonceRepository;
+import ma.ac.uir.syndicproject.repository.ImmeubleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,8 @@ public class AnnonceService {
 
     @Autowired
     private AnnonceRepository annonceRepository;
+    @Autowired
+    private ImmeubleRepository immeubleRepository;
 
     public List<Annonce> getAllAnnonces() {
         return annonceRepository.findAll();
@@ -36,4 +40,9 @@ public class AnnonceService {
         Pageable limit3 = PageRequest.of(0, 3);
         return annonceRepository.findTodayTitlesByImmeubleId(immeubleId, limit3);
     }
+    public List<Immeuble> getAllImmeubles() {
+        return immeubleRepository.findAll();
+    }
+
+
 }

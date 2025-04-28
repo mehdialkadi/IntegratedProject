@@ -41,4 +41,6 @@ public class ResidencyController {
     public void deleteResidency(@PathVariable Long id) {
         residencyService.deleteResidency(id);
     }
+
+
 }
