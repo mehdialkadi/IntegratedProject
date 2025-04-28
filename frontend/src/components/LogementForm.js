@@ -1,62 +1,139 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LogementForm = () => {
+    const [formData, setFormData] = useState({
+        numero: '',
+        surface: '',
+        etage: '',
+        proprietaireId: '',
+        locataireId: '',
+        immeubleId: '',
+        placeGarageId: '',
+    });
+
     const [proprietaires, setProprietaires] = useState([]);
     const [locataires, setLocataires] = useState([]);
     const [immeubles, setImmeubles] = useState([]);
     const [placesGarage, setPlacesGarage] = useState([]);
 
     useEffect(() => {
-        // Récupérer les propriétaires, locataires, immeubles et places de garage
-        axios.get("http://localhost:8080/api/proprietaires").then((response) => setProprietaires(response.data));
-        axios.get("http://localhost:8080/api/locataires").then((response) => setLocataires(response.data));
-        axios.get("http://localhost:8080/api/residencies").then((response) => setImmeubles(response.data));
-        axios.get("http://localhost:8080/api/places-garage").then((response) => setPlacesGarage(response.data));
+        // Charger les données
+        axios.get('http://localhost:8080/api/proprietaires')
+            .then(response => setProprietaires(response.data))
+            .catch(error => console.error('Erreur chargement propriétaires:', error));
+
+        axios.get('http://localhost:8080/api/locataires')
+            .then(response => setLocataires(response.data))
+            .catch(error => console.error('Erreur chargement locataires:', error));
+
+        axios.get('http://localhost:8080/api/immeubles')
+            .then(response => setImmeubles(response.data))
+            .catch(error => console.error('Erreur chargement immeubles:', error));
+
+        axios.get('http://localhost:8080/api/places-garage')
+            .then(response => setPlacesGarage(response.data))
+            .catch(error => console.error('Erreur chargement places garage:', error));
     }, []);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Envoi du formulaire
+        axios.post('http://localhost:8080/api/logements', formData)
+            .then(response => {
+                console.log('Logement ajouté:', response.data);
+                // Reset form
+                setFormData({
+                    numero: '',
+                    surface: '',
+                    etage: '',
+                    proprietaireId: '',
+                    locataireId: '',
+                    immeubleId: '',
+                    placeGarageId: '',
+                });
+            })
+            .catch(error => console.error('Erreur ajout logement:', error));
+    };
+
     return (
-        <form>
-            <label htmlFor="proprietaire">Propriétaire:</label>
-            <select name="proprietaire" id="proprietaire">
-                {proprietaires.map((proprietaire) => (
-                    <option key={proprietaire.id} value={proprietaire.id}>
-                        {proprietaire.nom} {proprietaire.prenom}
-                    </option>
-                ))}
-            </select>
+        <div>
+            <h2>Ajouter un Logement</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Numéro :</label>
+                    <input type="text" name="numero" value={formData.numero} onChange={handleChange} required />
+                </div>
 
-            <label htmlFor="locataire">Locataire:</label>
-            <select name="locataire" id="locataire">
-                {locataires.map((locataire) => (
-                    <option key={locataire.id} value={locataire.id}>
-                        {locataire.nom} {locataire.prenom}
-                    </option>
-                ))}
-            </select>
+                <div>
+                    <label>Surface :</label>
+                    <input type="text" name="surface" value={formData.surface} onChange={handleChange} required />
+                </div>
 
-            <label htmlFor="immeuble">Immeuble:</label>
-            <select name="immeuble" id="immeuble">
-                {immeubles.map((immeuble) => (
-                    <option key={immeuble.id} value={immeuble.id}>
-                        {immeuble.nom}
-                    </option>
-                ))}
-            </select>
+                <div>
+                    <label>Étage :</label>
+                    <input type="text" name="etage" value={formData.etage} onChange={handleChange} required />
+                </div>
 
-            <label htmlFor="placeGarage">Place de Garage:</label>
-            <select name="placeGarage" id="placeGarage">
-                {placesGarage.map((place) => (
-                    <option key={place.id} value={place.id}>
-                        {place.numero}
-                    </option>
-                ))}
-            </select>
+                <div>
+                    <label>Propriétaire :</label>
+                    <select name="proprietaireId" value={formData.proprietaireId} onChange={handleChange} required>
+                        <option value="">Sélectionner un propriétaire</option>
+                        {proprietaires.map((proprio) => (
+                            <option key={proprio.id} value={proprio.id}>
+                                {proprio.nom} {proprio.prenom}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            {/* Autres champs du formulaire */}
+                <div>
+                    <label>Locataire :</label>
+                    <select name="locataireId" value={formData.locataireId} onChange={handleChange}>
+                        <option value="">Sélectionner un locataire</option>
+                        {locataires.map((loc) => (
+                            <option key={loc.id} value={loc.id}>
+                                {loc.nom} {loc.prenom}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            <button type="submit">Créer Logement</button>
-        </form>
+                <div>
+                    <label>Immeuble :</label>
+                    <select name="immeubleId" value={formData.immeubleId} onChange={handleChange} required>
+                        <option value="">Sélectionner un immeuble</option>
+                        {immeubles.map((imm) => (
+                            <option key={imm.id} value={imm.id}>
+                                {imm.nom}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Place de Garage :</label>
+                    <select name="placeGarageId" value={formData.placeGarageId} onChange={handleChange}>
+                        <option value="">Sélectionner une place de garage</option>
+                        {placesGarage.map((pg) => (
+                            <option key={pg.id} value={pg.id}>
+                                {pg.numero} - {pg.statut}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <button type="submit">Ajouter Logement</button>
+            </form>
+        </div>
     );
 };
 
