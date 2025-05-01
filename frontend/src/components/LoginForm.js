@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const LoginForm = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
@@ -15,13 +16,19 @@ const LoginForm = ({ onLoginSuccess }) => {
             return;
         }
 
-        // Vérification que l'email et le mot de passe sont corrects
-        if (email === 'syndic@gmail.com' && password === 'syndic') {
-            setMessage('Connexion réussie');
-            onLoginSuccess();  // Appel de la fonction onLoginSuccess pour mettre à jour isLoggedIn
-        } else {
-            setMessage('Email ou mot de passe incorrect');
-        }
+        axios.post('http://localhost:8080/api/auth/login', { email, password })
+            .then(response => {
+                if (response.data === 'Email ou mot de passe incorrect') {
+                    setMessage(response.data);
+                } else {
+                    setMessage('Connexion réussie');
+                    onLoginSuccess();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                setMessage('Une erreur est survenue. Veuillez réessayer plus tard.');
+            });
     };
 
     return (

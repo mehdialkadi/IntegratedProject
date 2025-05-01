@@ -9,19 +9,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
 public class LoginController {
 
     @Autowired
     private SyndicService syndicService;
 
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session) {
+    public String login(@RequestBody Syndic syndic, HttpSession session) {
         // Appeler le service pour vérifier l'authentification
-        Syndic syndic = syndicService.authenticateSyndic(email, password);
-        if (syndic != null) {
+        Syndic login = syndicService.authenticateSyndic(syndic.getEmail(), syndic.getPassword());
+        if (login != null) {
             // Connexion réussie
-            session.setAttribute("currentUser", syndic);
-            return "Connexion réussie pour: " + syndic.getNom();
+            session.setAttribute("currentUser", login);
+            return "Connexion réussie pour: " + login.getNom();
         } else {
             // Connexion échouée
             return "Email ou mot de passe incorrect";

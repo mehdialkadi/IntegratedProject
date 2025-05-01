@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoginForm from './components/LoginForm';  // Import du composant Login
-import Dashboard from './components/Dashboard';  // Import du Dashboard
+import Dashboard from './components/Dashboard';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
