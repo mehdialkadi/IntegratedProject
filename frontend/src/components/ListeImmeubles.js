@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const ListeImmeubles = () => {
     const [immeubles, setImmeubles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -8,7 +10,7 @@ const ListeImmeubles = () => {
 
     useEffect(() => {
         // Faire une requête GET pour récupérer les immeubles
-        axios.get('http://localhost:8080/api/immeubles')
+        axios.get('/api/immeubles')
             .then((response) => {
                 setImmeubles(response.data);
                 setLoading(false);

@@ -6,6 +6,8 @@ const LoginForm = ({ onLoginSuccess }) => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
+    axios.defaults.withCredentials = true;
+
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,7 +18,7 @@ const LoginForm = ({ onLoginSuccess }) => {
             return;
         }
 
-        axios.post('http://localhost:8080/api/auth/login', { email, password })
+        axios.post('/api/auth/login', { email, password })
             .then(response => {
                 if (response.data === 'Email ou mot de passe incorrect') {
                     setMessage(response.data);

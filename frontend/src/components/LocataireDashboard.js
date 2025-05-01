@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaSignOutAlt } from 'react-icons/fa';
 import './LocataireDashboard.css';
+import {useNavigate} from "react-router-dom";
 
 const LocataireDashboard = () => {
     const [logement, setLogement] = useState(null);
     const [annonces, setAnnonces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     axios.defaults.withCredentials = true;
 
@@ -37,6 +40,17 @@ const LocataireDashboard = () => {
     const handleAnnoncesClick = () => {
         console.log('Annonces header clicked!');
     };
+
+    const handleLogOut = async () => {
+        axios.post('/api/locataires/logout', {}, { withCredentials: true })
+            .then(() => {
+                // redirect after logout
+                navigate('/', { replace: true });
+            })
+            .catch(err => {
+                console.error('Logout failed', err);
+            });
+    }
 
     return (
         <div className="dashboard-container">
@@ -80,7 +94,7 @@ const LocataireDashboard = () => {
                     ))}
                 </ul>
 
-                <button className="history-button">
+                <button className="history-button" onClick={handleLogOut}>
                     Historique des réclamations
                 </button>
             </div>
