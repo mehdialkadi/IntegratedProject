@@ -52,6 +52,10 @@ const LocataireDashboard = () => {
             });
     }
 
+    const handleReclamationsClick = () => {
+        navigate('/locataireReclamations');
+    }
+
     return (
         <div className={styles.dashboardContainer}>
             <div className={styles.infoPanel}>
@@ -102,7 +106,7 @@ const LocataireDashboard = () => {
                     ))}
                 </ul>
 
-                <button className={styles.historyButton}>
+                <button className={styles.historyButton} onClick={handleReclamationsClick}>
                     Historique des réclamations
                 </button>
 

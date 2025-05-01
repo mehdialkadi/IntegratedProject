@@ -1,5 +1,8 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
+import ma.ac.uir.syndicproject.model.Locataire;
+import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.model.Reclamation;
 import ma.ac.uir.syndicproject.service.ReclamationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +43,11 @@ public class ReclamationController {
     @DeleteMapping("/{id}")
     public void deleteReclamation(@PathVariable Long id) {
         reclamationService.deleteReclamation(id);
+    }
+
+    @GetMapping("/getReclamationsByLocataire")
+    public List<Reclamation> getReclamationsByLocataire(HttpSession session) {
+        Locataire me = (Locataire) session.getAttribute("currentUser");
+        return reclamationService.findByLocataire(me.getId());
     }
 }

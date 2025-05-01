@@ -29,4 +29,6 @@ public class ReclamationService {
     public void deleteReclamation(Long id) {
         reclamationRepository.deleteById(id);
     }
+
+    public List<Reclamation> findByLocataire(Long locataireId) {return reclamationRepository.findByUtilisateurId(locataireId);}
 }

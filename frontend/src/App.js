@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import LoginForm from './components/LoginForm';  // Import du composant Login
 import Dashboard from './components/Dashboard';
 import { BrowserRouter, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import LocataireAnnonces from "./components/LocataireAnnonces";
+import LoginFormLocataire from "./components/LoginFormLocataire";
+import LocataireDashboard from "./components/LocataireDashboard";
+import LocataireReclamations from "./components/LocataireReclamations";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
@@ -32,6 +36,10 @@ function App() {
                             : <Navigate to="/login" replace />
                     }
                 />
+
+                <Route path="/locataireAnnonces" element={<LocataireAnnonces />} />
+
+                <Route path="/locataireReclamations" element={<LocataireReclamations />} />
 
                 {/* fallback 404 */}
                 <Route path="*" element={<h1>404 – Page non trouvée</h1>} />
