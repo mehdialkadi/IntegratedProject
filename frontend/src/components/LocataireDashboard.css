@@ -1,6 +1,6 @@
 /* full‐screen background */
 .dashboard-container {
-    background: url(./assets/background.png) no-repeat center/cover;
+    background: url(../assets/background.png) no-repeat center/cover;
     min-height: 100vh;
     display: flex;
     align-items: center;

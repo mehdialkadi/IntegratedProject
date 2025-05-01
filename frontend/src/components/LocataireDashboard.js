@@ -1,0 +1,89 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { FaSignOutAlt } from 'react-icons/fa';
+import './LocataireDashboard.css';
+
+const PropertyDashboard = () => {
+    const [logement, setLogement] = useState(null);
+    const [annonces, setAnnonces] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // 1) Récupérer le logement du locataire courant
+                const { data: logData } = await axios.get('/api/logement/getLogementByLocataire');
+                setLogement(logData);
+
+                // 2) Récupérer les annonces pour l'immeuble du logement
+                const immId = logData.immeuble.id;
+                const { data: annData } = await axios.get(
+                    `/api/annonces/today/titles/logement/${immId}`
+                );
+                setAnnonces(annData);
+            } catch (err) {
+                // Axios jette sur les codes non-2xx
+                setError(err.response?.data?.message || err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []);
+
+    if (loading) return <div className="loading">Chargement…</div>;
+    if (error)   return <div className="error">Erreur : {error}</div>;
+
+    const handleAnnoncesClick = () => {
+        console.log('Annonces header clicked!');
+    };
+
+    return (
+        <div className="dashboard-container">
+            <div className="info-panel">
+                <button className="logout-button">
+                    <FaSignOutAlt size={24} />
+                </button>
+
+                {/* Champs dynamiques */}
+                <div className="field">
+                    <span className="label">Numéro du logement</span>
+                    <span className="value">{logement.numero}</span>
+                </div>
+                <div className="field">
+                    <span className="label">Étage</span>
+                    <span className="value">{logement.etage}</span>
+                </div>
+                <div className="field">
+                    <span className="label">Propriétaire associé</span>
+                    <span className="value">{logement.proprietaire.nom}</span>
+                </div>
+                <div className="field">
+                    <span className="label">Place de garage</span>
+                    <span className="value">{logement.placeGarage.numero}</span>
+                </div>
+                <div className="field">
+                    <span className="label">Montant des charges mensuelles</span>
+                    <span className="value">{logement.montantChargeMensuelle} MAD</span>
+                </div>
+
+                {/* Annonces cliquable */}
+                <h3 className="annonces-heading" onClick={handleAnnoncesClick}>
+                    Annonces:
+                </h3>
+                <ul className="annonces-list">
+                    {annonces.map((titre, idx) => (
+                        <li key={idx}>{titre}</li>
+                    ))}
+                </ul>
+
+                <button className="history-button">
+                    Historique des réclamations
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default PropertyDashboard;

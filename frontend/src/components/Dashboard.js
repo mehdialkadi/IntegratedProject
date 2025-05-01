@@ -8,6 +8,7 @@ import ResidencesList from './ResidencesList';
 import './Dashboard.css';
 import ListeImmeubles from "./ListeImmeubles";
 import LogementForm from "./LogementForm";
+import LoginForm from "./LoginForm";
 
 const Dashboard = () => {
     const [activeComponent, setActiveComponent] = useState('immeubles');
