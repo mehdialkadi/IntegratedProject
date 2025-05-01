@@ -1,5 +1,5 @@
 /* full‐screen background */
-.dashboard-container {
+.dashboardContainer {
     background: url(../assets/background.png) no-repeat center/cover;
     min-height: 100vh;
     display: flex;
@@ -10,17 +10,16 @@
 }
 
 /* translucent info panel */
-.info-panel {
+.infoPanel {
     position: relative;
     background-color: rgba(217, 217, 217, 0.89);
     padding: 118px 32px 32px;
-    /* ↑ bumped top padding from 32px to 48px */
     width: 800px;
     height: 600px;
 }
 
 /* logout icon in top‐right */
-.logout-button {
+.logoutButton {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -34,45 +33,34 @@
     display: flex;
     justify-content: space-between;
     margin: 8px 0 16px;
-    /* ↑ 8px top, 16px bottom */
 }
 
 .label {
     font-weight: 400;
 }
 
-.value {
-    /* you can style the value differently if desired */
-}
-
-.annonces-heading {
+.annoncesHeading {
     cursor: pointer;
-    /* optional hover effect */
     position: absolute;
-    /* position at bottom-left */
     bottom: 201px;
     left: 50px;
 }
 
-.annonces-list {
+.annoncesList {
     list-style: none;
     padding: 0;
     margin: 20px 0 0;
-    /* small top margin beneath the clickable heading */
     position: absolute;
-    /* position at bottom-left */
     bottom: 138px;
     left: 50px;
 }
 
 /* history button */
-.history-button {
+.historyButton {
     position: absolute;
-    /* position at bottom-right */
     bottom: 100px;
     right: 16px;
     margin-top: 0;
-    /* remove previous top margin */
     padding: 12px 24px;
     background-color: #d9a67a;
     border: none;

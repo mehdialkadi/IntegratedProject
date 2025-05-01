@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaSignOutAlt } from 'react-icons/fa';
-import './LocataireDashboard.css';
+import styles from './LocataireDashboard.module.css';
 import {useNavigate} from "react-router-dom";
 
 const LocataireDashboard = () => {
@@ -38,14 +38,14 @@ const LocataireDashboard = () => {
     if (error)   return <div className="error">Erreur : {error}</div>;
 
     const handleAnnoncesClick = () => {
-        console.log('Annonces header clicked!');
+        navigate('/locataireAnnonces');
     };
 
-    const handleLogOut = async () => {
+    const handleLogOut = () => {
         axios.post('/api/locataires/logout', {}, { withCredentials: true })
             .then(() => {
                 // redirect after logout
-                navigate('/', { replace: true });
+                navigate('/login', { replace: true });
             })
             .catch(err => {
                 console.error('Logout failed', err);
@@ -53,50 +53,59 @@ const LocataireDashboard = () => {
     }
 
     return (
-        <div className="dashboard-container">
-            <div className="info-panel">
-                <button className="logout-button">
-                    <FaSignOutAlt size={24} />
+        <div className={styles.dashboardContainer}>
+            <div className={styles.infoPanel}>
+
+                <button
+                    className={styles.logoutButton}
+                    onClick={handleLogOut}
+                >
+                    <FaSignOutAlt size={24}/>
                 </button>
 
-                {/* Champs dynamiques */}
-                <div className="field">
-                    <span className="label">Numéro du logement</span>
-                    <span className="value">{logement.numero}</span>
+                <div className={styles.field}>
+                    <span className={styles.label}>Numéro du logement</span>
+                    <span className={styles.value}>{logement.numero}</span>
                 </div>
-                <div className="field">
-                    <span className="label">Étage</span>
-                    <span className="value">{logement.etage}</span>
+                <div className={styles.field}>
+                    <span className={styles.label}>Étage</span>
+                    <span className={styles.value}>{logement.etage}</span>
                 </div>
-                <div className="field">
-                    <span className="label">Propriétaire associé</span>
-                    <span className="value">{logement.proprietaire.nom}</span>
+                <div className={styles.field}>
+                    <span className={styles.label}>Propriétaire associé</span>
+                    <span className={styles.value}>
+            {logement.proprietaire?.nom ?? 'none'}
+          </span>
                 </div>
-                <div className="field">
-                    <span className="label">Place de garage</span>
-                    <span className="value">
-                        {logement.placeGarage
-                            ? logement.placeGarage.numero
-                            : 'none'}
-                    </span>
+                <div className={styles.field}>
+                    <span className={styles.label}>Place de garage</span>
+                    <span className={styles.value}>
+            {logement.placeGarage?.numero ?? 'none'}
+          </span>
                 </div>
-                <div className="field">
-                    <span className="label">Montant des charges mensuelles</span>
-                    <span className="value">{logement.montantChargeMensuelle} MAD</span>
+                <div className={styles.field}>
+                    <span className={styles.label}>Montant des charges mensuelles</span>
+                    <span className={styles.value}>
+            {logement.montantChargeMensuelle} MAD
+          </span>
                 </div>
 
-                <h3 className="annonces-heading" onClick={handleAnnoncesClick}>
+                <h3
+                    className={styles.annoncesHeading}
+                    onClick={handleAnnoncesClick}
+                >
                     Annonces:
                 </h3>
-                <ul className="annonces-list">
+                <ul className={styles.annoncesList}>
                     {annonces.map((titre, idx) => (
                         <li key={idx}>{titre}</li>
                     ))}
                 </ul>
 
-                <button className="history-button" onClick={handleLogOut}>
+                <button className={styles.historyButton}>
                     Historique des réclamations
                 </button>
+
             </div>
         </div>
     );

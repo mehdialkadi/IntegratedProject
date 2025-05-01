@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const CreerImmeuble = () => {
     const [nom, setNom] = useState('');
     const [adresse, setAdresse] = useState('');
@@ -25,7 +27,7 @@ const CreerImmeuble = () => {
         };
 
         try {
-            await axios.post('http://localhost:8082/api/immeubles', immeuble);
+            await axios.post('/api/immeubles', immeuble);
             setMessage("✅ Immeuble créé avec succès !");
             // Reset form fields
             setNom('');

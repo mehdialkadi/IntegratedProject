@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.service;
 
+import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Annonce;
 import ma.ac.uir.syndicproject.model.Immeuble;
 import ma.ac.uir.syndicproject.repository.AnnonceRepository;
@@ -40,6 +41,11 @@ public class AnnonceService {
         Pageable limit3 = PageRequest.of(0, 3);
         return annonceRepository.findTodayTitlesByImmeubleId(immeubleId, limit3);
     }
+
+    public List<Annonce> getAllImmeubleAnnonces(Long immeubleId) {
+        return annonceRepository.getAllImmeubleAnnonces(immeubleId);
+    }
+
     public List<Immeuble> getAllImmeubles() {
         return immeubleRepository.findAll();
     }

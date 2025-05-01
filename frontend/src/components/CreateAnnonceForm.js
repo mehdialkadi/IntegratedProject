@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 function CreateAnnonceForm() {
     const [titre, setTitre] = useState('');
     const [contenu, setContenu] = useState('');
@@ -9,7 +11,7 @@ function CreateAnnonceForm() {
 
     useEffect(() => {
         // Récupérer la liste des immeubles au chargement du composant
-        axios.get('http://localhost:8080/api/immeubles')
+        axios.get('/api/immeubles')
             .then(response => {
                 // Vérifier les données
                 console.log('Immeubles récupérés:', response.data);
@@ -29,7 +31,7 @@ function CreateAnnonceForm() {
             date: new Date(),  // Utilisation de la date actuelle
         };
 
-        axios.post('http://localhost:8080/api/annonces', annonceData)
+        axios.post('/api/annonces', annonceData)
             .then(response => {
                 console.log('Annonce créée avec succès:', response.data);
             })

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const DetailsImmeuble = () => {
     const { id } = useParams();  // récupère l'id depuis l'URL
     const [immeuble, setImmeuble] = useState(null);
@@ -10,7 +12,7 @@ const DetailsImmeuble = () => {
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const res = await axios.get(`http://localhost:8080/api/immeubles/${id}`);
+                const res = await axios.get(`/api/immeubles/${id}`);
                 setImmeuble(res.data);
             } catch (err) {
                 console.error('Erreur lors du chargement des détails :', err);

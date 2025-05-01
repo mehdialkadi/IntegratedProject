@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const ResidencyForm = () => {
     const [nom, setNom] = useState('');
@@ -8,7 +11,7 @@ const ResidencyForm = () => {
         e.preventDefault();
         const residencyData = { nom, adresse };
 
-        fetch('http://localhost:8080/api/residencies', {
+        fetch('/api/residencies', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

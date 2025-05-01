@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const LogementForm = () => {
     const [formData, setFormData] = useState({
         numero: '',
@@ -19,19 +21,19 @@ const LogementForm = () => {
 
     useEffect(() => {
         // Charger les données
-        axios.get('http://localhost:8080/api/proprietaires')
+        axios.get('/api/proprietaires')
             .then(response => setProprietaires(response.data))
             .catch(error => console.error('Erreur chargement propriétaires:', error));
 
-        axios.get('http://localhost:8080/api/locataires')
+        axios.get('/api/locataires')
             .then(response => setLocataires(response.data))
             .catch(error => console.error('Erreur chargement locataires:', error));
 
-        axios.get('http://localhost:8080/api/immeubles')
+        axios.get('/api/immeubles')
             .then(response => setImmeubles(response.data))
             .catch(error => console.error('Erreur chargement immeubles:', error));
 
-        axios.get('http://localhost:8080/api/places-garage')
+        axios.get('/api/places-garage')
             .then(response => setPlacesGarage(response.data))
             .catch(error => console.error('Erreur chargement places garage:', error));
     }, []);
@@ -47,7 +49,7 @@ const LogementForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Envoi du formulaire
-        axios.post('http://localhost:8080/api/logements', formData)
+        axios.post('/api/logements', formData)
             .then(response => {
                 console.log('Logement ajouté:', response.data);
                 // Reset form

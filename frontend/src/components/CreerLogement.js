@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const CreerLogement = () => {
     const [immeubles, setImmeubles] = useState([]);
     const [immeubleId, setImmeubleId] = useState('');
@@ -12,7 +14,7 @@ const CreerLogement = () => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:8082/api/immeubles')
+        axios.get('/api/immeubles')
             .then(response => setImmeubles(response.data))
             .catch(error => console.error("Erreur lors du chargement des immeubles:", error));
     }, []);
@@ -35,7 +37,7 @@ const CreerLogement = () => {
             }
         };
 
-        axios.post('http://localhost:8082/api/logements', data)
+        axios.post('/api/logements', data)
             .then(() => {
                 setMessage("✅ Logement ajouté avec succès !");
                 setLogement({ numero: '', etage: '', montantChargeMensuelle: '' });

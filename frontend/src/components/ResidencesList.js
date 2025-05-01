@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 function ResidencyDetails() {
     const [residencies, setResidencies] = useState([]);
     const [selectedResidency, setSelectedResidency] = useState(null);
@@ -10,7 +12,7 @@ function ResidencyDetails() {
 
     // Charger les résidences disponibles au démarrage
     useEffect(() => {
-        axios.get("http://localhost:8080/api/residencies")
+        axios.get("/api/residencies")
             .then(response => {
                 setResidencies(response.data);
             })
@@ -34,7 +36,7 @@ function ResidencyDetails() {
                 // Assurez-vous que l'ID de la résidence est correct
                 console.log('ID de la résidence sélectionnée :', selectedResidency.id);
 
-                const response = await axios.get(`http://localhost:8080/api/residencies/${selectedResidency.id}/immeubles`);
+                const response = await axios.get(`/api/residencies/${selectedResidency.id}/immeubles`);
                 setImmeubles(response.data);  // Mettre à jour la liste des immeubles
             } catch (error) {
                 console.error("Erreur lors du chargement des immeubles :", error);

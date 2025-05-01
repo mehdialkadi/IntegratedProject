@@ -1,0 +1,80 @@
+/* full-screen background */
+.dashboardContainer {
+    background: url(../assets/background.png) no-repeat center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Irish Grover';
+    font-size: 25px;
+}
+
+/* translucent info panel now a flex container to center its children */
+.infoPanel {
+    position: relative;
+    background-color: rgba(217, 217, 217, 0.89);
+    padding: 118px;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* still center horizontally */
+    justify-content: flex-start;/* move children to the top */
+
+    /* ← make it scrollable when content overflows: */
+    overflow-y: auto;
+    /* optional: show scrollbar only when needed */
+    scrollbar-width: thin;   /* for Firefox */
+}
+
+/* for WebKit browsers (Chrome, Safari) */
+.infoPanel::-webkit-scrollbar {
+    width: 8px;
+}
+.infoPanel::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+.annoncesHeading {
+    position: absolute;
+    top: 20px;               /* 16px from the top border */
+    left: 50%;               /* center horizontally */
+    transform: translateX(-50%);
+    margin: 0 0 16px;        /* only bottom margin */
+    text-align: center;
+}
+
+
+/* Announcement list centered beneath the heading */
+.annoncesList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: static;
+    text-align: center;
+}
+
+.annoncesList li {
+    margin-bottom: 85px;
+}
+
+/* Back button — bigger, bolder, still top-left */
+.backButton {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 30px;      /* larger text */
+    font-weight: 900;     /* bold */
+    color: #333;
+}
+
+.backButton svg {
+    margin-right: 8px;
+    font-size: 24px;      /* match the text size */
+}
