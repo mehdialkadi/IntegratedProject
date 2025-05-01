@@ -2,6 +2,7 @@ package ma.ac.uir.syndicproject.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -22,7 +23,7 @@ public class PlaceGarage {
     private Immeuble immeuble;
 
     @OneToOne(mappedBy = "placeGarage")
-    @JsonManagedReference("garage-logement")
+    @JsonIgnoreProperties("placeGarage")
     private Logement logement;
 
     // Constructors

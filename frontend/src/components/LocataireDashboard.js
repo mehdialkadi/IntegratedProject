@@ -3,24 +3,23 @@ import axios from 'axios';
 import { FaSignOutAlt } from 'react-icons/fa';
 import './LocataireDashboard.css';
 
-const PropertyDashboard = () => {
+const LocataireDashboard = () => {
     const [logement, setLogement] = useState(null);
     const [annonces, setAnnonces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    axios.defaults.withCredentials = true;
+
     useEffect(() => {
         async function fetchData() {
             try {
                 // 1) Récupérer le logement du locataire courant
-                const { data: logData } = await axios.get('/api/logement/getLogementByLocataire');
+                const { data: logData } = await axios.get('/api/logements/getLogementByLocataire');
                 setLogement(logData);
 
                 // 2) Récupérer les annonces pour l'immeuble du logement
-                const immId = logData.immeuble.id;
-                const { data: annData } = await axios.get(
-                    `/api/annonces/today/titles/logement/${immId}`
-                );
+                const { data: annData } = await axios.get(`/api/annonces/getLastThreeAnnonce`);
                 setAnnonces(annData);
             } catch (err) {
                 // Axios jette sur les codes non-2xx
@@ -61,14 +60,17 @@ const PropertyDashboard = () => {
                 </div>
                 <div className="field">
                     <span className="label">Place de garage</span>
-                    <span className="value">{logement.placeGarage.numero}</span>
+                    <span className="value">
+                        {logement.placeGarage
+                            ? logement.placeGarage.numero
+                            : 'none'}
+                    </span>
                 </div>
                 <div className="field">
                     <span className="label">Montant des charges mensuelles</span>
                     <span className="value">{logement.montantChargeMensuelle} MAD</span>
                 </div>
 
-                {/* Annonces cliquable */}
                 <h3 className="annonces-heading" onClick={handleAnnoncesClick}>
                     Annonces:
                 </h3>
@@ -86,4 +88,4 @@ const PropertyDashboard = () => {
     );
 };
 
-export default PropertyDashboard;
+export default LocataireDashboard;

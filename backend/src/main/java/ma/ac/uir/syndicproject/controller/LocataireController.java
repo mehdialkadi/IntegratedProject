@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/locataires")
-@CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials="true")  // adjust to your React dev URL
 public class LocataireController {
 
     @Autowired
