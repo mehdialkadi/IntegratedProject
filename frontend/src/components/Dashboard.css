@@ -1,25 +1,33 @@
+/* Conteneur principal */
 .dashboard-container {
     display: flex;
     height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #ecf0f1;
 }
 
+/* Barre latérale */
 .sidebar {
-    width: 200px;
+    width: 220px;
     background-color: #2c3e50;
-    color: white;
+    color: #ecf0f1;
     padding: 20px;
     display: flex;
     flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar button {
-    margin: 10px 0;
-    padding: 10px;
+    margin: 8px 0;
+    padding: 12px 15px;
     border: none;
     background-color: #34495e;
     color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar button:hover {
@@ -30,39 +38,61 @@
     flex: 1;
 }
 
+/* Bouton de déconnexion */
 .logout-btn {
     background-color: #e74c3c;
 }
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Conteneur du formulaire */
 .form-container {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
-    margin: auto;
+    padding: 30px 40px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Titre du formulaire */
 .form-container h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #2c3e50;
 }
 
+/* Inputs, selects, boutons */
 .form-container input,
 .form-container select,
 .form-container button {
     width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 6px;
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border 0.2s;
 }
 
+.form-container input:focus,
+.form-container select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Bouton de soumission */
 .submit-btn {
     background-color: #007bff;
     color: white;
     border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
     background-color: #0056b3;
 }
-

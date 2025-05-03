@@ -55,4 +55,14 @@ public class LogementController {
         List<PlaceGarage> placesGarage = logementService.getAllPlacesGarage();
         return new ResponseEntity<>(placesGarage, HttpStatus.OK);
     }
+    // Endpoint pour obtenir la liste des logements
+    @GetMapping
+    public ResponseEntity<List<Logement>> getAllLogements() {
+        List<Logement> logements = logementService.getAllLogements();
+        return new ResponseEntity<>(logements, HttpStatus.OK);
+    }
+
+
+
+
 }

@@ -22,11 +22,23 @@ public class ImmeubleService {
         return immeubleRepository.findById(id);
     }
 
+
     public Immeuble saveImmeuble(Immeuble immeuble) {
         return immeubleRepository.save(immeuble);
     }
 
     public void deleteImmeuble(Long id) {
         immeubleRepository.deleteById(id);
+    }
+    public List<Immeuble> getImmeublesByResidencyId(Long residencyId) {
+        return immeubleRepository.findByResidencyId(residencyId);
+    }
+    public List<Immeuble> getImmeublesByResidency(Long residencyId) {
+        return immeubleRepository.findByResidencyId(residencyId);
+    }
+
+
+    public boolean existsById(Long id) {
+        return false;
     }
 }

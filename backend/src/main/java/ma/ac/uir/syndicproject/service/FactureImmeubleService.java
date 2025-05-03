@@ -1,32 +1,43 @@
 package ma.ac.uir.syndicproject.service;
 
 import ma.ac.uir.syndicproject.model.FactureImmeuble;
+import ma.ac.uir.syndicproject.model.Immeuble;
 import ma.ac.uir.syndicproject.repository.FactureImmeubleRepository;
+import ma.ac.uir.syndicproject.repository.ImmeubleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FactureImmeubleService {
 
     @Autowired
-    private FactureImmeubleRepository factureImmeubleRepository;
+    private FactureImmeubleRepository factureRepository;
+
+    @Autowired
+    private ImmeubleRepository immeubleRepository;
 
     public List<FactureImmeuble> getAllFactures() {
-        return factureImmeubleRepository.findAll();
+        return factureRepository.findAll();
     }
 
-    public Optional<FactureImmeuble> getFactureById(Long id) {
-        return factureImmeubleRepository.findById(id);
+    public FactureImmeuble getFactureById(Long id) {
+        return factureRepository.findById(id).orElse(null);
+    }
+
+    public FactureImmeuble createFacturePourImmeuble(Long immeubleId, FactureImmeuble facture) {
+        Immeuble immeuble = immeubleRepository.findById(immeubleId)
+                .orElseThrow(() -> new RuntimeException("Immeuble non trouvé avec ID: " + immeubleId));
+        facture.setImmeuble(immeuble);
+        return factureRepository.save(facture);
     }
 
     public FactureImmeuble saveFacture(FactureImmeuble facture) {
-        return factureImmeubleRepository.save(facture);
+        return factureRepository.save(facture);
     }
 
     public void deleteFacture(Long id) {
-        factureImmeubleRepository.deleteById(id);
+        factureRepository.deleteById(id);
     }
 }

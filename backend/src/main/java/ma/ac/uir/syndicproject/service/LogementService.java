@@ -80,4 +80,9 @@ public class LogementService {
     public Optional<PlaceGarage> getPlaceGarageById(Long id) {
         return placeGarageRepository.findById(id);
     }
+    public List<Logement> getLogementsByImmeuble(Long immeubleId) {
+        return logementRepository.findByImmeubleId(immeubleId);
+    }
+
+
 }
