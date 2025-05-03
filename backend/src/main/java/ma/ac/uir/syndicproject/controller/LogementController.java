@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.model.Proprietaire;
 import ma.ac.uir.syndicproject.model.Locataire;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/logement")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/logements")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials="true")
 public class LogementController {
 
     @Autowired
@@ -55,6 +56,7 @@ public class LogementController {
         List<PlaceGarage> placesGarage = logementService.getAllPlacesGarage();
         return new ResponseEntity<>(placesGarage, HttpStatus.OK);
     }
+<<<<<<< HEAD
     // Endpoint pour obtenir la liste des logements
     @GetMapping
     public ResponseEntity<List<Logement>> getAllLogements() {
@@ -65,4 +67,12 @@ public class LogementController {
 
 
 
+=======
+
+    @GetMapping("/getLogementByLocataire")
+    public Logement getLogementByLocataire(HttpSession session) {
+        Locataire me = (Locataire) session.getAttribute("currentUser");
+        return logementService.findByLocataire(me.getId());
+    }
+>>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
 }

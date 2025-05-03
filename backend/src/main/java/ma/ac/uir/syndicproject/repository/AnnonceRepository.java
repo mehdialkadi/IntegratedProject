@@ -18,8 +18,13 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Long> {
     WHERE a.date = CURRENT_DATE
       AND a.immeuble.id = :immeubleId
   """)
-    List<String> findTodayTitlesByImmeubleId(
-            @Param("immeubleId") Long immeubleId,
-            Pageable pageable
-    );
+    List<String> findTodayTitlesByImmeubleId(@Param("immeubleId") Long immeubleId, Pageable pageable);
+
+    @Query("""
+    SELECT a
+    FROM Annonce a
+    WHERE a.date = CURRENT_DATE
+      AND a.immeuble.id = :immeubleId
+  """)
+    List<Annonce> getAllImmeubleAnnonces(@Param("immeubleId") Long immeubleId);
 }

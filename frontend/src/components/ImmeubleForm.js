@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 function ImmeubleForm() {
     const [residencies, setResidencies] = useState([]);
     const [selectedResidency, setSelectedResidency] = useState("");
@@ -17,7 +19,7 @@ function ImmeubleForm() {
     });
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/residencies")
+        axios.get("/api/residencies")
             .then(response => {
                 setResidencies(response.data);
             })
@@ -50,7 +52,7 @@ function ImmeubleForm() {
             syndic: { id: 1 } // 🧠 provisoire pour test : tu peux changer selon ton projet
         };
 
-        axios.post("http://localhost:8080/api/immeubles", payload)
+        axios.post("/api/immeubles", payload)
             .then(response => {
                 console.log("Immeuble ajouté avec succès :", response.data);
                 alert("Immeuble ajouté !");

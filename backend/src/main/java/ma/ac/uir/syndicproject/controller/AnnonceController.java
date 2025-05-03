@@ -17,10 +17,15 @@ import java.util.Optional;
 @RequestMapping("/api/annonces")
 @CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
 public class AnnonceController {
-
-    @Autowired
     private AnnonceService annonceService;
     private LogementService logementService;
+
+    @Autowired
+    public AnnonceController(AnnonceService annonceService, LogementService logementService) {
+        this.annonceService = annonceService;
+        this.logementService = logementService;
+    }
+
 
     @GetMapping
     public List<Annonce> getAllAnnonces() {
@@ -59,10 +64,19 @@ public class AnnonceController {
         return annonceService.findTodayTitlesByImmeubleId(immeubleId);
     }
 
+    @GetMapping("/getAllImmeubleAnnonces")
+    public List<Annonce> getAllImmeubleAnnonces(HttpSession session) {
+        Locataire me = (Locataire) session.getAttribute("currentUser");
+
+        Logement monLogement = logementService.findByLocataire(me.getId());
+
+        Long immeubleId = monLogement.getImmeuble().getId();
+
+        return annonceService.getAllImmeubleAnnonces(immeubleId);
+    }
+
     @GetMapping("/immeubles")
     public List<Immeuble> getAllImmeubles() {
         return annonceService.getAllImmeubles();
     }
 }
-    // Créer une nouvelle annonce
-

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const Immeubles = () => {
     const [immeubles, setImmeubles] = useState([]);
     const [immeubleSelectionne, setImmeubleSelectionne] = useState(null);
@@ -10,7 +12,7 @@ const Immeubles = () => {
     useEffect(() => {
         const fetchImmeubles = async () => {
             try {
-                const response = await axios.get('http://localhost:8082/api/immeubles');
+                const response = await axios.get('/api/immeubles');
                 setImmeubles(response.data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des immeubles :", error);
@@ -26,7 +28,7 @@ const Immeubles = () => {
 
     const chargerLogements = async () => {
         try {
-            const response = await axios.get('http://localhost:8082/api/logements');
+            const response = await axios.get('/api/logements');
             const logementsImmeuble = response.data.filter(log => log.immeuble.id === immeubleSelectionne.id);
             setLogements(logementsImmeuble);
             setAfficherLogements(true);

@@ -27,7 +27,6 @@ public class Logement {
 
     @ManyToOne
     @JoinColumn(name = "id_proprio")
-    @JsonBackReference("proprio-logement")
     private Proprietaire proprietaire;
 
     @OneToOne
@@ -42,7 +41,6 @@ public class Logement {
 
     @OneToOne
     @JoinColumn(name = "id_place_garage", unique = true)
-    @JsonBackReference("garage-logement")
     private PlaceGarage placeGarage;
 
     @OneToMany(mappedBy = "logement", cascade = CascadeType.ALL)

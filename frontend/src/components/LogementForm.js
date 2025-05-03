@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './LogementForm.css';
 
+axios.defaults.withCredentials = true;
+
 const LogementForm = () => {
     const [logement, setLogement] = useState({
         numero: '',
@@ -20,10 +22,29 @@ const LogementForm = () => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
+<<<<<<< HEAD
         axios.get('http://localhost:8080/api/proprietaires').then(res => setProprietaires(res.data));
         axios.get('http://localhost:8080/api/locataires').then(res => setLocataires(res.data));
         axios.get('http://localhost:8080/api/immeubles').then(res => setImmeubles(res.data));
         axios.get('http://localhost:8080/api/places-garage').then(res => setPlacesGarage(res.data));
+=======
+        // Charger les données
+        axios.get('/api/proprietaires')
+            .then(response => setProprietaires(response.data))
+            .catch(error => console.error('Erreur chargement propriétaires:', error));
+
+        axios.get('/api/locataires')
+            .then(response => setLocataires(response.data))
+            .catch(error => console.error('Erreur chargement locataires:', error));
+
+        axios.get('/api/immeubles')
+            .then(response => setImmeubles(response.data))
+            .catch(error => console.error('Erreur chargement immeubles:', error));
+
+        axios.get('/api/places-garage')
+            .then(response => setPlacesGarage(response.data))
+            .catch(error => console.error('Erreur chargement places garage:', error));
+>>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
     }, []);
 
     const handleChange = (e) => {
@@ -41,7 +62,12 @@ const LogementForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         axios.post('http://localhost:8080/api/logement', logement)
+=======
+        // Envoi du formulaire
+        axios.post('/api/logements', formData)
+>>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
             .then(response => {
                 setMessage('✅ Logement ajouté avec succès !');
                 setLogement({

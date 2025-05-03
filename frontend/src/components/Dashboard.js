@@ -7,10 +7,14 @@ import ResidencesList from './ResidencesList';
 import LoginForm from './LoginForm';
 import ListeImmeubles from "./ListeImmeubles";
 import LogementForm from "./LogementForm";
+<<<<<<< HEAD
 import CreateFacture from './CreateFacture'; // ✅ Import du formulaire de facture
 
 
 import './Dashboard.css';
+=======
+import LoginForm from "./LoginForm";
+>>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
 
 const Dashboard = () => {
     const [activeComponent, setActiveComponent] = useState('immeubles');

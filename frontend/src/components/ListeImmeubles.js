@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ListeImmeubles.css'; // Assurez-vous que le chemin est correct selon la structure de votre projet
 
+axios.defaults.withCredentials = true;
+
 const ListeImmeubles = () => {
     const [immeubles, setImmeubles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -10,7 +12,12 @@ const ListeImmeubles = () => {
     const [editingImmeuble, setEditingImmeuble] = useState(null);
 
     useEffect(() => {
+<<<<<<< HEAD
         axios.get('http://localhost:8080/api/immeubles')
+=======
+        // Faire une requête GET pour récupérer les immeubles
+        axios.get('/api/immeubles')
+>>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
             .then((response) => {
                 setImmeubles(response.data);
                 setLoading(false);
