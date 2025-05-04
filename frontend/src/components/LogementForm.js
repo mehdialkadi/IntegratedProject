@@ -56,7 +56,7 @@ const LogementForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Envoi du formulaire
-        axios.post('/api/logements', formData)
+        axios.post('/api/logements', logement)
             .then(response => {
                 setMessage('✅ Logement ajouté avec succès !');
                 setLogement({

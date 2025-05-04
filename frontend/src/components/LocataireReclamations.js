@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import styles from './LocataireReclamations.module.css';
 
 
-axios.defaults.withCredentials = true;
-
 export default function LocataireReclamations() {
     const [reclamations, setReclamations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    axios.defaults.withCredentials = true;
 
     useEffect(() => {
         axios.get('/api/reclamations/getReclamationsByLocataire')
@@ -32,13 +32,13 @@ export default function LocataireReclamations() {
                     className={styles.backButton}
                     onClick={() => navigate(-1)}
                 >
-                    <FaArrowLeft /> Retour
+                    <FaArrowLeft />
                 </button>
 
                 {/* New Reclamation Button */}
                 <button
                     className={styles.newButton}
-                    onClick={() => navigate('/reclamations/new')}
+                    onClick={() => navigate('/locataireCreateReclamation')}
                 >
                     <FaPlus /> Nouvelle réclamation
                 </button>
@@ -49,6 +49,7 @@ export default function LocataireReclamations() {
                         <li key={r.id} className={styles.reclamationItem}>
                             <h4>{r.titre}</h4>
                             <p>{r.description}</p>
+                            <p>{r.date}</p>
                             <p>{r.etat}</p>
                         </li>
                     ))}

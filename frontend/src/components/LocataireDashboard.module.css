@@ -70,3 +70,10 @@
     font-family: 'Irish Grover';
     font-size: 20px;
 }
+
+/* error message */
+.error {
+    color: red;
+    margin-bottom: 16px;
+    text-align: center;
+}

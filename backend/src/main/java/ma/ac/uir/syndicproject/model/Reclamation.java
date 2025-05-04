@@ -74,6 +74,10 @@ public class Reclamation {
         this.description = description;
     }
 
+    public LocalDate getDate() {return date;}
+
+    public void setDate(LocalDate date) {this.date = date;}
+
     public String getEtat() {
         return etat;
     }

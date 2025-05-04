@@ -13,15 +13,18 @@
 .infoPanel {
     position: relative;
     background-color: rgba(217, 217, 217, 0.89);
+    padding: 118px;
     width: 800px;
-    max-height: 600px;
-    padding: 32px;
+    height: 600px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: center;       /* still center horizontally */
+    justify-content: flex-start;/* move children to the top */
+
+    /* ← make it scrollable when content overflows: */
     overflow-y: auto;
-    scrollbar-width: thin;
+    /* optional: show scrollbar only when needed */
+    scrollbar-width: thin;   /* for Firefox */
 }
 
 /* scroll bar for WebKit */
@@ -57,14 +60,15 @@
     position: absolute;
     top: 16px;
     right: 16px;
-    background: none;
     border: none;
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: bold;
+    font-family: 'Irish Grover';
     color: #333;
+    background: #d9a67a none;
 }
 .newButton svg {
     margin-right: 8px;
@@ -88,19 +92,19 @@
 .reclamationList {
     list-style: none;
     padding: 0;
-    margin: 96px 0 0; /* space below heading */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+    margin-left: -90px;
+    align-self: flex-start;
+    text-align: left;
 }
 
 /* Individual reclamation item */
 .reclamationItem {
-    width: 100%;
-    padding: 16px;
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 85px;
+}
+
+/* error message */
+.error {
+    color: red;
+    margin-bottom: 16px;
+    text-align: center;
 }

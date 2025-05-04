@@ -6,6 +6,7 @@ import LocataireAnnonces from "./components/LocataireAnnonces";
 import LoginFormLocataire from "./components/LoginFormLocataire";
 import LocataireDashboard from "./components/LocataireDashboard";
 import LocataireReclamations from "./components/LocataireReclamations";
+import LocataireCreateReclamation from "./components/LocataireCreateReclamation";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
@@ -19,12 +20,12 @@ function App() {
     return (
             <Routes>
                 {/* public home */}
-                <Route path="/" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
+                <Route path="/" element={<LoginFormLocataire onLoginSuccess={handleLoginSuccess} />} />
 
                 {/* login route */}
                 <Route
                     path="/login"
-                    element={<LoginForm onLoginSuccess={handleLoginSuccess} />}
+                    element={<LoginFormLocataire onLoginSuccess={handleLoginSuccess} />}
                 />
 
                 {/* protected dashboard */}
@@ -32,7 +33,7 @@ function App() {
                     path="/dashboard"
                     element={
                         isLoggedIn
-                            ? <Dashboard />
+                            ? <LocataireDashboard />
                             : <Navigate to="/login" replace />
                     }
                 />
@@ -40,6 +41,8 @@ function App() {
                 <Route path="/locataireAnnonces" element={<LocataireAnnonces />} />
 
                 <Route path="/locataireReclamations" element={<LocataireReclamations />} />
+
+                <Route path="/locataireCreateReclamation" element={<LocataireCreateReclamation />} />
 
                 {/* fallback 404 */}
                 <Route path="*" element={<h1>404 – Page non trouvée</h1>} />

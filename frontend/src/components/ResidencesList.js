@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
-
 function ResidencyDetails() {
     const [residencies, setResidencies] = useState([]);
     const [selectedResidency, setSelectedResidency] = useState(null);
@@ -13,19 +11,21 @@ function ResidencyDetails() {
     const [selectedImmeuble, setSelectedImmeuble] = useState(null);
     const [selectedLogement, setSelectedLogement] = useState(null); // Etat pour le logement sélectionné
 
+    axios.defaults.withCredentials = true;
+
     useEffect(() => {
         axios.get("/api/residencies")
             .then(response => {
-                setResidences(response.data);
-                setLoading(false);
+                setSelectedResidence(response.data);
+                setLoadingImmeubles(false);
             })
             .catch(err => {
                 setError('Erreur lors du chargement des résidences');
-                setLoading(false);
+                setLoadingImmeubles(false);
             });
     }, []);
 
-    if (loading) {
+    if (loadingImmeubles) {
         return <div>Chargement...</div>;
     }
 
@@ -61,13 +61,13 @@ function ResidencyDetails() {
     return (
         <div>
             <h1>Liste des Résidences</h1>
-            {residences.length === 0 ? (
+            {residencies.length === 0 ? (
                 <p>Aucune résidence trouvée.</p>
             ) : (
                 <div>
                     {/* Affichage des résidences */}
                     <div>
-                        {residences.map((residence) => (
+                        {residencies.map((residence) => (
                             <button
                                 key={residence.id}
                                 onClick={() => handleResidenceClick(residence)}
@@ -169,7 +169,7 @@ function ResidencyDetails() {
             )}
         </div>
     );
-};
+}
 
 // Style pour les boutons
 const buttonStyle = {
@@ -195,4 +195,4 @@ const detailsStyle = {
     boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
 };
 
-export default ResidencesList;
+export default ResidencyDetails;

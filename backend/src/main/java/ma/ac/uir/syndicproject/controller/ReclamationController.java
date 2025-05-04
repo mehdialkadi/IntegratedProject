@@ -1,10 +1,16 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Id;
 import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Locataire;
 import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.model.Reclamation;
+import ma.ac.uir.syndicproject.model.Utilisateur;
+import ma.ac.uir.syndicproject.service.LocataireService;
+import ma.ac.uir.syndicproject.service.LogementService;
 import ma.ac.uir.syndicproject.service.ReclamationService;
+import ma.ac.uir.syndicproject.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +21,16 @@ import java.util.Optional;
 @RequestMapping("/api/reclamations")
 @CrossOrigin(origins = "http://localhost:3000")  // adjust to your React dev URL
 public class ReclamationController {
+    private ReclamationService reclamationService;
+    private UtilisateurService utilisateurService;
+    private LogementService logementService;
 
     @Autowired
-    private ReclamationService reclamationService;
+    public ReclamationController(ReclamationService reclamationService, UtilisateurService utilisateurService, LogementService logementService) {
+        this.reclamationService = reclamationService;
+        this.utilisateurService = utilisateurService;
+        this.logementService = logementService;
+    }
 
     @GetMapping
     public List<Reclamation> getAllReclamations() {
@@ -30,7 +43,12 @@ public class ReclamationController {
     }
 
     @PostMapping
-    public Reclamation createReclamation(@RequestBody Reclamation reclamation) {
+    public Reclamation createReclamation(@RequestBody Reclamation reclamation, HttpSession session) {
+        Locataire currentUser = (Locataire) session.getAttribute("currentUser");
+        Logement currentLogement = logementService.findByLocataire(currentUser.getId());
+        reclamation.setUtilisateur(currentUser);
+        reclamation.setLogement(currentLogement);
+        reclamation.setEtat("en attente");
         return reclamationService.saveReclamation(reclamation);
     }
 
