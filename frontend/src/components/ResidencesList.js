@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-<<<<<<< HEAD
-const ResidencesList = () => {
-    const [residences, setResidences] = useState([]);
-    const [loading, setLoading] = useState(true);
-=======
 axios.defaults.withCredentials = true;
 
 function ResidencyDetails() {
@@ -13,18 +8,13 @@ function ResidencyDetails() {
     const [selectedResidency, setSelectedResidency] = useState(null);
     const [immeubles, setImmeubles] = useState([]);
     const [loadingImmeubles, setLoadingImmeubles] = useState(false);
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
     const [error, setError] = useState(null);
     const [selectedResidence, setSelectedResidence] = useState(null);
     const [selectedImmeuble, setSelectedImmeuble] = useState(null);
     const [selectedLogement, setSelectedLogement] = useState(null); // Etat pour le logement sélectionné
 
     useEffect(() => {
-<<<<<<< HEAD
-        axios.get('http://localhost:8080/api/residencies')
-=======
         axios.get("/api/residencies")
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
             .then(response => {
                 setResidences(response.data);
                 setLoading(false);
@@ -54,21 +44,18 @@ function ResidencyDetails() {
         setSelectedLogement(null); // Réinitialiser le logement sélectionné
     };
 
-<<<<<<< HEAD
-    const handleLogementClick = (logement) => {
-        setSelectedLogement(logement);
-        console.log("Détails du logement sélectionné:", logement);  // Affichage détaillé dans la console
-=======
-                const response = await axios.get(`/api/residencies/${selectedResidency.id}/immeubles`);
-                setImmeubles(response.data);  // Mettre à jour la liste des immeubles
-            } catch (error) {
-                console.error("Erreur lors du chargement des immeubles :", error);
-                setError("Erreur lors du chargement des immeubles.");
-            } finally {
-                setLoadingImmeubles(false);
-            }
+    const handleLogementClick = async (logement) => {
+        try {
+            setSelectedLogement(logement);
+            console.log("Détails du logement sélectionné:", logement);  // Affichage détaillé dans la console
+            const response = await axios.get(`/api/residencies/${selectedResidency.id}/immeubles`);
+            setImmeubles(response.data);  // Mettre à jour la liste des immeubles
+        } catch (error) {
+            console.error("Erreur lors du chargement des immeubles :", error);
+            setError("Erreur lors du chargement des immeubles.");
+        } finally {
+            setLoadingImmeubles(false);
         }
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
     };
 
     return (

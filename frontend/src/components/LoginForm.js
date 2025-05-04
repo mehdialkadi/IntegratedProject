@@ -1,36 +1,20 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import './LoginForm.css'; // Assure-toi que le chemin est correct
-=======
 import axios from 'axios';
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
 
 const LoginForm = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
-<<<<<<< HEAD
-    const handleSubmit = (e) => {
-=======
     axios.defaults.withCredentials = true;
 
     // Fonction pour gérer la soumission du formulaire
     const handleSubmit = async (e) => {
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
         e.preventDefault();
         if (!email || !password) {
             setMessage('Veuillez remplir tous les champs');
             return;
         }
-<<<<<<< HEAD
-        if (email === 'syndic@gmail.com' && password === 'syndic') {
-            setMessage('Connexion réussie');
-            onLoginSuccess();
-        } else {
-            setMessage('Email ou mot de passe incorrect');
-        }
-=======
 
         axios.post('/api/auth/login', { email, password })
             .then(response => {
@@ -45,7 +29,6 @@ const LoginForm = ({ onLoginSuccess }) => {
                 console.error(error);
                 setMessage('Une erreur est survenue. Veuillez réessayer plus tard.');
             });
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
     };
 
     return (

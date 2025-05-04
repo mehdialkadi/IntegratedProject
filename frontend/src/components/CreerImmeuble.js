@@ -27,16 +27,7 @@ const CreerImmeuble = () => {
         };
 
         try {
-<<<<<<< HEAD
-            // Axios envoie la requête POST au backend
-            await axios.post('http://localhost:8082/api/immeubles', immeuble, {
-                headers: {
-                    'Content-Type': 'application/json' // Déclare le type du contenu, généralement géré par Axios
-                }
-            });
-=======
             await axios.post('/api/immeubles', immeuble);
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
             setMessage("✅ Immeuble créé avec succès !");
             // Reset des champs du formulaire
             setNom('');
