@@ -56,7 +56,7 @@ public class LogementController {
         List<PlaceGarage> placesGarage = logementService.getAllPlacesGarage();
         return new ResponseEntity<>(placesGarage, HttpStatus.OK);
     }
-<<<<<<< HEAD
+
     // Endpoint pour obtenir la liste des logements
     @GetMapping
     public ResponseEntity<List<Logement>> getAllLogements() {
@@ -64,15 +64,9 @@ public class LogementController {
         return new ResponseEntity<>(logements, HttpStatus.OK);
     }
 
-
-
-
-=======
-
     @GetMapping("/getLogementByLocataire")
     public Logement getLogementByLocataire(HttpSession session) {
         Locataire me = (Locataire) session.getAttribute("currentUser");
         return logementService.findByLocataire(me.getId());
     }
->>>>>>> c8024bd9c9bf17eabccd9848bbfe906ad5ca66e9
 }
