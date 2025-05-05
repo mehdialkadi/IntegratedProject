@@ -1,10 +1,7 @@
 package ma.ac.uir.syndicproject.controller;
 
 import jakarta.servlet.http.HttpSession;
-import ma.ac.uir.syndicproject.model.Annonce;
-import ma.ac.uir.syndicproject.model.Immeuble;
-import ma.ac.uir.syndicproject.model.Locataire;
-import ma.ac.uir.syndicproject.model.Logement;
+import ma.ac.uir.syndicproject.model.*;
 import ma.ac.uir.syndicproject.service.AnnonceService;
 import ma.ac.uir.syndicproject.service.LogementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @RestController
 @RequestMapping("/api/annonces")
@@ -64,15 +62,18 @@ public class AnnonceController {
         return annonceService.findTodayTitlesByImmeubleId(immeubleId);
     }
 
-    @GetMapping("/getAllImmeubleAnnonces")
-    public List<Annonce> getAllImmeubleAnnonces(HttpSession session) {
-        Locataire me = (Locataire) session.getAttribute("currentUser");
+    @GetMapping("/getLastThreeAnnonceForProprio")
+    public List<String> getLastThreeAnnonceForProprio(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
 
-        Logement monLogement = logementService.findByLocataire(me.getId());
+        return annonceService.findTodayTitlesByImmeubleId(me.getLogements().get(0).getImmeuble().getId());
+    }
 
-        Long immeubleId = monLogement.getImmeuble().getId();
+    @GetMapping("/getAllImmeubleAnnoncesForProprio")
+    public List<Annonce> getAllImmeubleAnnoncesForProprio(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
 
-        return annonceService.getAllImmeubleAnnonces(immeubleId);
+        return annonceService.getAllImmeubleAnnonces(me.getLogements().get(0).getImmeuble().getId());
     }
 
     @GetMapping("/immeubles")

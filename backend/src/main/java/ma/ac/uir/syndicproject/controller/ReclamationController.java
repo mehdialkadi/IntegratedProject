@@ -3,10 +3,7 @@ package ma.ac.uir.syndicproject.controller;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.Id;
 import jakarta.servlet.http.HttpSession;
-import ma.ac.uir.syndicproject.model.Locataire;
-import ma.ac.uir.syndicproject.model.Logement;
-import ma.ac.uir.syndicproject.model.Reclamation;
-import ma.ac.uir.syndicproject.model.Utilisateur;
+import ma.ac.uir.syndicproject.model.*;
 import ma.ac.uir.syndicproject.service.LocataireService;
 import ma.ac.uir.syndicproject.service.LogementService;
 import ma.ac.uir.syndicproject.service.ReclamationService;
@@ -52,6 +49,16 @@ public class ReclamationController {
         return reclamationService.saveReclamation(reclamation);
     }
 
+    @PostMapping("/createProprioReclamation")
+    public Reclamation createReclamationProprio(@RequestBody Reclamation reclamation, HttpSession session) {
+        Proprietaire currentUser = (Proprietaire) session.getAttribute("currentUser");
+        Logement currentLogement = (Logement) session.getAttribute("currentLogement");
+        reclamation.setUtilisateur(currentUser);
+        reclamation.setLogement(currentLogement);
+        reclamation.setEtat("en attente");
+        return reclamationService.saveReclamation(reclamation);
+    }
+
     @PutMapping("/{id}")
     public Reclamation updateReclamation(@PathVariable Long id, @RequestBody Reclamation reclamation) {
         reclamation.setId(id);
@@ -67,5 +74,11 @@ public class ReclamationController {
     public List<Reclamation> getReclamationsByLocataire(HttpSession session) {
         Locataire me = (Locataire) session.getAttribute("currentUser");
         return reclamationService.findByLocataire(me.getId());
+    }
+
+    @GetMapping("/getReclamationsByLogement")
+    public List<Reclamation> getReclamationsByLogement(HttpSession session) {
+        Logement log = (Logement) session.getAttribute("currentLogement");
+        return reclamationService.findByLogement(log.getIdLogement());
     }
 }

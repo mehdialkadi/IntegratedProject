@@ -1,6 +1,8 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.DocumentCommun;
+import ma.ac.uir.syndicproject.model.Proprietaire;
 import ma.ac.uir.syndicproject.service.DocumentCommunService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +42,11 @@ public class DocumentCommunController {
     @DeleteMapping("/{id}")
     public void deleteDocument(@PathVariable Long id) {
         documentCommunService.deleteDocument(id);
+    }
+
+    @GetMapping("/getDocumentsByImmeuble")
+    public List<DocumentCommun> getDocumentsByImmeuble(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
+        return documentCommunService.findByImmeubleId(me.getLogements().get(0).getImmeuble().getId());
     }
 }

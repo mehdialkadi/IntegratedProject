@@ -29,4 +29,6 @@ public class ProprietaireService {
     public void deleteProprietaire(Long id) {
         proprietaireRepository.deleteById(id);
     }
+
+    public Proprietaire findProprioByEmailAndPassword(String email, String password){return proprietaireRepository.findByEmailAndPassword(email, password);}
 }

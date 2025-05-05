@@ -29,4 +29,6 @@ public class PlaceGarageService {
     public void deletePlaceGarage(Long id) {
         placeGarageRepository.deleteById(id);
     }
+
+    public List<PlaceGarage> getAllOpenSpaces(String status, Long immeubleId) {return placeGarageRepository.getAllOpenSpaces(status, immeubleId);}
 }

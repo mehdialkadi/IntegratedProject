@@ -1,8 +1,14 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import ma.ac.uir.syndicproject.model.Locataire;
 import ma.ac.uir.syndicproject.model.Proprietaire;
 import ma.ac.uir.syndicproject.service.ProprietaireService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,5 +46,29 @@ public class ProprietaireController {
     @DeleteMapping("/{id}")
     public void deleteProprietaire(@PathVariable Long id) {
         proprietaireService.deleteProprietaire(id);
+    }
+
+    @PostMapping("/findProprioByEmailAndPassword")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Proprietaire> findProprioByEmailAndPassword(@RequestBody Proprietaire proprio, HttpSession session) {
+        Proprietaire user = proprietaireService.findProprioByEmailAndPassword(proprio.getEmail(), proprio.getPassword());
+        if (user != null) {
+            session.setAttribute("currentUser", user);
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(HttpSession session, HttpServletResponse response) {
+        // 1) Invalidate the session on the server
+        session.invalidate();
+        // 2) Instruct the browser (or Postman) to delete the cookie
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }

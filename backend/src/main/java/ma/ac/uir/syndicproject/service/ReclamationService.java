@@ -31,4 +31,6 @@ public class ReclamationService {
     }
 
     public List<Reclamation> findByLocataire(Long locataireId) {return reclamationRepository.findByUtilisateurId(locataireId);}
+
+    public List<Reclamation> findByLogement(Long logementId) {return reclamationRepository.findByLogementIdLogement(logementId);}
 }

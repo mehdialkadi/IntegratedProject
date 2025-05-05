@@ -32,6 +32,7 @@ public class LogementService {
 
     public Logement findByLocataire(Long locataireId){return logementRepository.findByLocataireId(locataireId);}
 
+    public List<Logement> findByProprietaireId(Long proprietaireId){return logementRepository.findByProprietaireId(proprietaireId);}
 
     @Autowired
     private ProprietaireRepository proprietaireRepository;

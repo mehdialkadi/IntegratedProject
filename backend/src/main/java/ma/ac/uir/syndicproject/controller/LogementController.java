@@ -1,5 +1,8 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.model.Proprietaire;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/logements")
@@ -68,5 +72,24 @@ public class LogementController {
     public Logement getLogementByLocataire(HttpSession session) {
         Locataire me = (Locataire) session.getAttribute("currentUser");
         return logementService.findByLocataire(me.getId());
+    }
+
+    @GetMapping("/getLogementsByProprio")
+    public List<Logement> getLogementsByProprio(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
+        return logementService.findByProprietaireId(me.getId());
+    }
+
+    @GetMapping("/getLogementById/{id}")
+    public ResponseEntity<Logement> getLogementById(@PathVariable Long id, HttpSession session) {
+        Logement log = logementService.getLogementById(id).orElseThrow(() -> new EntityNotFoundException("Logement introuvable"));
+        session.setAttribute("currentLogement", log);
+        return ResponseEntity.ok(log);
+    }
+
+    @PostMapping("/clearCurrentLogement")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void clearCurrentLogement(HttpSession session) {
+        session.removeAttribute("currentLogement");
     }
 }

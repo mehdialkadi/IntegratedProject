@@ -29,4 +29,6 @@ public class DocumentCommunService {
     public void deleteDocument(Long id) {
         documentCommunRepository.deleteById(id);
     }
+
+    public List<DocumentCommun> findByImmeubleId(Long immeubleId) {return documentCommunRepository.findByImmeubleId(immeubleId);}
 }

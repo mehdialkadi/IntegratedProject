@@ -20,12 +20,12 @@ function App() {
     return (
             <Routes>
                 {/* public home */}
-                <Route path="/" element={<LoginFormLocataire onLoginSuccess={handleLoginSuccess} />} />
+                <Route path="/" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
 
                 {/* login route */}
                 <Route
                     path="/login"
-                    element={<LoginFormLocataire onLoginSuccess={handleLoginSuccess} />}
+                    element={<LoginForm onLoginSuccess={handleLoginSuccess} />}
                 />
 
                 {/* protected dashboard */}
@@ -33,7 +33,7 @@ function App() {
                     path="/dashboard"
                     element={
                         isLoggedIn
-                            ? <LocataireDashboard />
+                            ? <Dashboard />
                             : <Navigate to="/login" replace />
                     }
                 />

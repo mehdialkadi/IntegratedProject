@@ -29,4 +29,6 @@ public class PaiementService {
     public void deletePaiement(Long id) {
         paiementRepository.deleteById(id);
     }
+
+    public List<Paiement> findByLogementId(long id) {return paiementRepository.findByLogementIdLogement(id);}
 }

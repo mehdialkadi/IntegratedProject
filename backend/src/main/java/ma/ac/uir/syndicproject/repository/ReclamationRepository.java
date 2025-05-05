@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ReclamationRepository extends JpaRepository<Reclamation, Long> {
     List<Reclamation> findByUtilisateurId(Long locataireId);
+    List<Reclamation> findByLogementIdLogement(Long logementId);
 }

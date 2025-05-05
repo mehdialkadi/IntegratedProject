@@ -1,5 +1,7 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
+import ma.ac.uir.syndicproject.model.Logement;
 import ma.ac.uir.syndicproject.model.Paiement;
 import ma.ac.uir.syndicproject.service.PaiementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +42,11 @@ public class PaiementController {
     @DeleteMapping("/{id}")
     public void deletePaiement(@PathVariable Long id) {
         paiementService.deletePaiement(id);
+    }
+
+    @GetMapping("/getPaiementByLogement")
+    public List<Paiement> getPaiementByLogement(HttpSession session) {
+        Logement log = (Logement) session.getAttribute("currentLogement");
+        return paiementService.findByLogementId(log.getIdLogement());
     }
 }
