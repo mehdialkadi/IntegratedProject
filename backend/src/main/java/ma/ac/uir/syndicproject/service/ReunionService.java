@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.service;
 
+import ma.ac.uir.syndicproject.model.DocumentCommun;
 import ma.ac.uir.syndicproject.model.Reunion;
 import ma.ac.uir.syndicproject.repository.ReunionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,6 @@ public class ReunionService {
     public void deleteReunion(Long id) {
         reunionRepository.deleteById(id);
     }
+
+    public List<Reunion> findByImmeubleId(Long immeubleId) {return reunionRepository.findByImmeubleId(immeubleId);}
 }

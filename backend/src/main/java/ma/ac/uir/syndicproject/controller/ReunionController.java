@@ -1,5 +1,8 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
+import ma.ac.uir.syndicproject.model.DocumentCommun;
+import ma.ac.uir.syndicproject.model.Proprietaire;
 import ma.ac.uir.syndicproject.model.Reunion;
 import ma.ac.uir.syndicproject.service.ReunionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +43,11 @@ public class ReunionController {
     @DeleteMapping("/{id}")
     public void deleteReunion(@PathVariable Long id) {
         reunionService.deleteReunion(id);
+    }
+
+    @GetMapping("/getReunionsByImmeuble")
+    public List<Reunion> getReunionsByImmeuble(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
+        return reunionService.findByImmeubleId(me.getLogements().get(0).getImmeuble().getId());
     }
 }
