@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
-import './CreateFacture.css';  // Nous allons créer ce fichier CSS
+import './CreateFacture.css';
 
 const CreateFacture = () => {
     const [formData, setFormData] = useState({
@@ -9,172 +9,174 @@ const CreateFacture = () => {
         description: '',
         montant: '',
         date: '',
-        fichier: '',
+        fichier: null,
         immeubleId: ''
     });
+
     const [immeubles, setImmeubles] = useState([]);
 
     useEffect(() => {
-        // Charger la liste des immeubles depuis l'API
         axios.get('http://localhost:8080/api/immeubles')
             .then((response) => {
                 setImmeubles(response.data);
             })
             .catch((error) => {
-                console.error("Erreur lors du chargement des immeubles", error);
+                console.error("Erreur de chargement des immeubles :", error);
             });
     }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value
+            [name]: files ? files[0] : value
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { immeubleId, ...factureData } = formData;
+        const immeubleId = parseInt(formData.immeubleId, 10);
+        const factureData = new FormData();
+
+        factureData.append('type', formData.type);
+        factureData.append('description', formData.description);
+        factureData.append('montant', formData.montant);
+        factureData.append('date', formData.date);
+
+        // Ajouter le fichier seulement s'il est sélectionné
+        if (formData.fichier) {
+            factureData.append('file', formData.fichier);
+        }
 
         try {
-            // Envoi de la requête POST pour créer la facture
             const response = await axios.post(
-                `http://localhost:8080/api/factures-immeuble/immeuble/${immeubleId}`,
-                factureData
+                `http://localhost:8080/api/factures-immeuble/immeuble/${immeubleId}/upload`,
+                factureData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
             );
-            console.log("Réponse de l'API:", response.data); // Vérifiez la réponse de l'API
-
-            alert("Facture créée avec succès !");
-            generateFacturePDF(response.data, immeubleId); // Générer le PDF après création de la facture
+            alert("✅ Facture créée avec succès !");
+            if (response.data) {
+                generateFacturePDF(response.data, immeubleId);
+            }
         } catch (error) {
             console.error("Erreur lors de la création de la facture :", error);
-            alert("Erreur lors de la création de la facture.");
-            console.error("Détails de l'erreur:", error.response || error.message);
+            alert("❌ Échec de la création de la facture.");
         }
     };
 
-    // Fonction pour générer la facture en PDF
     const generateFacturePDF = (facture, immeubleId) => {
-        console.log("Données de la facture pour le PDF:", facture); // Vérifiez les données reçues
-
-        // Recherche des données de l'immeuble
-        const immeuble = immeubles.find((i) => i.id === parseInt(immeubleId));
+        const immeuble = immeubles.find(i => i.id === immeubleId);
         if (!immeuble) {
-            console.error("Immeuble introuvable");
-            alert("Immeuble introuvable.");
+            alert("Immeuble non trouvé.");
             return;
         }
 
         const doc = new jsPDF();
-
-        // Titre de la facture
         doc.setFontSize(18);
-        doc.text('Facture Immeuble', 20, 20);
-
-        // Détails de la facture
+        doc.text('Facture - Immeuble', 20, 20);
         doc.setFontSize(12);
         doc.text(`Type: ${facture.type}`, 20, 30);
         doc.text(`Description: ${facture.description}`, 20, 40);
-        doc.text(`Montant: ${facture.montant}€`, 20, 50);
+        doc.text(`Montant: ${facture.montant} €`, 20, 50);
         doc.text(`Date: ${facture.date}`, 20, 60);
-
-        // Ajouter des informations sur l'immeuble
         doc.text(`Immeuble: ${immeuble.nom} - ${immeuble.adresse}`, 20, 70);
 
-        // Si un fichier est fourni, ajouter un détail
-        if (facture.fichier) {
-            doc.text(`Fichier: ${facture.fichier}`, 20, 80);
+        if (facture.urlFichier) {
+            doc.text(`Fichier: ${facture.urlFichier}`, 20, 80);
         }
 
-        // Numéro de facture
-        const factureNumber = `Numéro de facture: ${facture.id || 'Inconnu'}`;
-        doc.text(factureNumber, 20, 90);
-
-        // Footer
-        const footerText = "Merci pour votre confiance !";
+        doc.text(`Numéro de facture: ${facture.id}`, 20, 90);
         doc.setFontSize(10);
-        doc.text(footerText, 20, 280);
+        doc.text("Merci pour votre confiance !", 20, 280);
 
         // Sauvegarder le PDF
         doc.save(`facture_${facture.id}.pdf`);
     };
 
     return (
-        <div className="create-facture-container">
-            <h2>Créer une facture pour un immeuble</h2>
+        <div className="facture-container">
+            <h2>Créer une facture</h2>
             <form onSubmit={handleSubmit} className="facture-form">
                 <div className="form-group">
-                    <label>Type :</label>
+                    <label htmlFor="type">Type :</label>
                     <input
-                        type="text"
+                        id="type"
                         name="type"
                         value={formData.type}
                         onChange={handleChange}
+                        placeholder="Entrez le type de facture"
                         required
-                        className="form-control"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Description :</label>
+                    <label htmlFor="description">Description :</label>
                     <input
-                        type="text"
+                        id="description"
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
+                        placeholder="Entrez la description"
                         required
-                        className="form-control"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Montant :</label>
+                    <label htmlFor="montant">Montant (€) :</label>
                     <input
-                        type="number"
+                        id="montant"
                         name="montant"
+                        type="number"
                         value={formData.montant}
                         onChange={handleChange}
                         required
-                        className="form-control"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Date :</label>
+                    <label htmlFor="date">Date :</label>
                     <input
-                        type="date"
+                        id="date"
                         name="date"
+                        type="date"
                         value={formData.date}
                         onChange={handleChange}
                         required
-                        className="form-control"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>Nom du fichier (facultatif) :</label>
+                    <label htmlFor="fichier">Fichier (facultatif) :</label>
                     <input
-                        type="text"
+                        id="fichier"
                         name="fichier"
-                        value={formData.fichier}
+                        type="file"
                         onChange={handleChange}
-                        className="form-control"
                     />
                 </div>
+
                 <div className="form-group">
-                    <label>ID de l'Immeuble :</label>
+                    <label htmlFor="immeubleId">Immeuble :</label>
                     <select
+                        id="immeubleId"
                         name="immeubleId"
                         value={formData.immeubleId}
                         onChange={handleChange}
                         required
-                        className="form-control"
                     >
-                        <option value="">Sélectionner un immeuble</option>
-                        {immeubles.map((immeuble) => (
-                            <option key={immeuble.id} value={immeuble.id}>
-                                {immeuble.nom} - {immeuble.adresse}
+                        <option value="">-- Sélectionnez un immeuble --</option>
+                        {immeubles.map((i) => (
+                            <option key={i.id} value={i.id}>
+                                {i.nom} - {i.adresse}
                             </option>
                         ))}
                     </select>
                 </div>
+
                 <button type="submit" className="btn-submit">Créer la facture</button>
             </form>
         </div>

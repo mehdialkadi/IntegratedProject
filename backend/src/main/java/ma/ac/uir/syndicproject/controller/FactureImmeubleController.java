@@ -1,6 +1,9 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.servlet.http.HttpSession;
+import ma.ac.uir.syndicproject.model.DocumentCommun;
 import ma.ac.uir.syndicproject.model.FactureImmeuble;
+import ma.ac.uir.syndicproject.model.Proprietaire;
 import ma.ac.uir.syndicproject.service.FactureImmeubleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +47,11 @@ public class FactureImmeubleController {
     @DeleteMapping("/{id}")
     public void deleteFacture(@PathVariable Long id) {
         factureService.deleteFacture(id);
+    }
+
+    @GetMapping("/getFactureByImmeuble")
+    public List<FactureImmeuble> getFactureByImmeuble(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
+        return factureService.findByImmeubleId(me.getLogements().get(0).getImmeuble().getId());
     }
 }

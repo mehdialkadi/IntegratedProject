@@ -18,9 +18,7 @@ public class ImmeubleService {
         return immeubleRepository.findAll();
     }
 
-    public Optional<Immeuble> getImmeubleById(Long id) {
-        return immeubleRepository.findById(id);
-    }
+
 
 
     public Immeuble saveImmeuble(Immeuble immeuble) {
@@ -35,6 +33,10 @@ public class ImmeubleService {
     }
     public List<Immeuble> getImmeublesByResidency(Long residencyId) {
         return immeubleRepository.findByResidencyId(residencyId);
+    }
+
+    public Optional<Immeuble> getImmeubleById(Long id) {
+        return immeubleRepository.findById(id);
     }
 
 

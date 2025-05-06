@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.service;
 
+import ma.ac.uir.syndicproject.model.DocumentCommun;
 import ma.ac.uir.syndicproject.model.FactureImmeuble;
 import ma.ac.uir.syndicproject.model.Immeuble;
 import ma.ac.uir.syndicproject.repository.FactureImmeubleRepository;
@@ -40,4 +41,6 @@ public class FactureImmeubleService {
     public void deleteFacture(Long id) {
         factureRepository.deleteById(id);
     }
+
+    public List<FactureImmeuble> findByImmeubleId(Long immeubleId) {return factureRepository.findByImmeubleId(immeubleId);}
 }
