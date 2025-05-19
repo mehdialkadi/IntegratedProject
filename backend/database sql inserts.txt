@@ -1,0 +1,72 @@
+INSERT INTO residency (id, nom, adresse) VALUES
+                                             (1, 'Résidence Nour', 'Avenue Hassan II, Tanger'),
+                                             (2, 'Résidence Al Boustane', 'Bd Mohamed V, Casablanca');
+
+INSERT INTO utilisateur (id, nom, prenom, email, password) VALUES
+    (10, 'Slaoui', 'Mohamed', 'syndic1@example.com', 'pass123');
+
+INSERT INTO syndic (id) VALUES (10);
+
+INSERT INTO immeuble (id, id_syndic, nom, adresse, nombre_appart, garage, nombre_place_garage, a_ascenceur, a_concierge, id_residency)
+VALUES
+    (1, 10, 'Immeuble A', 'Rue 10, Résidence Nour', 6, true, 3, true, false, 1),
+    (2, 10, 'Immeuble B', 'Rue 11, Résidence Nour', 4, false, 0, false, false, 1);
+
+-- Proprio
+INSERT INTO utilisateur (id, nom, prenom, email, password) VALUES
+    (20, 'El Amrani', 'Youssef', 'proprio@example.com', 'pass123');
+
+INSERT INTO proprietaire (id) VALUES (20);
+
+-- Locataire
+INSERT INTO utilisateur (id, nom, prenom, email, password) VALUES
+    (30, 'Bennis', 'Salma', 'locataire@example.com', 'pass123');
+
+INSERT INTO locataire (id) VALUES (30);
+
+INSERT INTO logement (id_logement, id_immeuble, id_proprio, id_locataire, numero, etage, montant_charge_mensuelle)
+VALUES
+    (1, 1, 20, 30, 5, 2, 700.00);
+
+INSERT INTO place_garage (id, id_immeuble, numero, statut)
+VALUES
+    (1, 1, 'PG-001', 'occupée'),
+    (2, 1, 'PG-002', 'libre'),
+    (3, 2, 'PG-003', 'libre');
+
+INSERT INTO paiement (id, id_logement, montant, date, facture_envoye)
+VALUES
+    (1, 1, 700.00, '2025-04-01', true),
+    (2, 1, 700.00, '2025-05-01', false);
+
+INSERT INTO facture_immeuble (id, id_immeuble, type, description, montant, date, url_fichier)
+VALUES
+    (1, 1, 'Eau', 'Facture eau avril', 300.00, '2025-04-30', 'factures/eau-avril.pdf'),
+    (2, 2, 'Electricité', 'Facture électricité avril', 450.00, '2025-04-30', 'factures/elec-avril.pdf');
+
+INSERT INTO annonce (id, id_immeuble, id_utilisateur, titre, contenu, date)
+VALUES
+    (1, 1, 10, 'Réparation ascenseur', 'Travaux prévus le 5 mai', '2025-04-26'),
+    (2, 2, 10, 'Coupure d\'eau', 'Maintenance prévue 6 mai', '2025-04-26');
+
+INSERT INTO reunion (id, id_immeuble, titre, description, date, heure, lieu)
+VALUES
+    (1, 1, 'Réunion annuelle', 'Discussion sur budget 2025', '2025-05-10', '18:00', 'Salle polyvalente - RDC');
+
+INSERT INTO reclamation (id, id_utilisateur, id_logement, titre, description, etat, date)
+VALUES
+    (1, 30, 1, 'Fuite robinet', 'Fuite dans la cuisine', 'en attente', '2025-04-25'),
+    (2, 20, 1, 'Problème électricité', 'Panne fréquente', 'résolue', '2025-04-20');
+
+INSERT INTO document_commun (id, id_immeuble, nom, type, url_fichier, date)
+VALUES
+    (1, 1, 'Règlement intérieur', 'PDF', 'docs/reglement.pdf', '2025-01-10'),
+    (2, 1, 'Liste des copropriétaires', 'Excel', 'docs/copros.xlsx', '2025-02-15');
+
+select NomResidence, NomImmeuble, Etage, Num, NomUtilisateur, prenom, Montant, Statut_Facture, Date from (
+select residency.nom AS NomResidence, immeuble.nom AS NomImmeuble, logement.etage AS Etage, logement.numero AS Num, utilisateur.nom AS NomUtilisateur, logement.id_locataire AS LocID, paiement.montant AS Montant, paiement.facture_envoye AS Statut_Facture, paiement.date AS Date
+from residency join immeuble on residency.id = immeuble.id_residency
+join logement on immeuble.id = logement.id_immeuble
+join paiement on logement.id_logement = paiement.id_logement
+left join utilisateur on utilisateur.id = logement.id_proprio) subquery
+left join utilisateur on utilisateur.id = subquery.LocID;

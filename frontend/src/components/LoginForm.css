@@ -1,0 +1,125 @@
+body {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container {
+    max-width: 420px;
+    margin: 100px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+    transform: translateY(-6px);
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    font-size: 30px;
+    color: #ffffff;
+    position: relative;
+}
+
+.login-container h2::after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background-color: #4facfe;
+    display: block;
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+.input-group {
+    margin-bottom: 22px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #d0e2f2;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 40px 12px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-wrapper input::placeholder {
+    color: #cfd8dc;
+}
+
+.input-wrapper input:focus {
+    border-color: #4facfe;
+    box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);
+}
+
+.input-icon,
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #b0bec5;
+}
+
+.input-icon {
+    left: 12px;
+}
+
+.toggle-password {
+    right: 12px;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    transform: scale(1.03);
+}
+
+button[type="submit"]:active {
+    transform: scale(0.97);
+}
+
+.login-container p {
+    margin-top: 18px;
+    color: #ff976b;
+    font-weight: bold;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+}

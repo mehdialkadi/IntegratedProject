@@ -1,0 +1,121 @@
+/* full-screen background */
+.dashboardContainer {
+    background: url(../assets/background.png) no-repeat center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Irish Grover';
+    font-size: 25px;
+}
+
+/* panel as flex column */
+.infoPanel {
+    position: relative;
+    background-color: rgba(217, 217, 217, 0.89);
+    padding: 78px;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* still center horizontally */
+    justify-content: flex-start;/* move children to the top */
+
+    /* ← make it scrollable when content overflows: */
+    overflow-y: auto;
+    /* optional: show scrollbar only when needed */
+    scrollbar-width: thin;   /* for Firefox */
+}
+
+/* scroll bar for WebKit */
+.infoPanel::-webkit-scrollbar {
+    width: 8px;
+}
+.infoPanel::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+/* back button */
+.backButton {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: 900;
+    color: #333;
+}
+.backButton svg {
+    margin-right: 8px;
+    font-size: 30px;
+}
+
+/* Form container */
+.form {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers label+input groups */
+}
+
+/* Label + input group: horizontal layout */
+.inputGroup {
+    display: flex;
+    align-items: center;        /* vertically center label and field */
+    margin-top: 48px;
+    margin-bottom: 50px;       /* space between groups */
+}
+
+.inputGroup label {
+    width: 150px;              /* fixed label width */
+    margin-right: 16px;        /* space between label and field */
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Irish Grover';
+    color: #333;
+}
+
+.inputGroup input {
+    flex: 1;                   /* take remaining space */
+    width: 400px;          /* horizontally shorter */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.inputGroup textarea {
+    flex: 1;                   /* take remaining space */
+    width: 400px;          /* horizontally shorter */
+    min-height: 120px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* error message */
+.error {
+    color: red;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* submit button */
+.submitButton {
+    position: absolute;
+    bottom: 70px;
+    right: 50px;
+    background: #d9a67a none;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Irish Grover';
+}

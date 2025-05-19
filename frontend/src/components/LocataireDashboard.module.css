@@ -1,0 +1,79 @@
+/* full‐screen background */
+.dashboardContainer {
+    background: url(../assets/background.png) no-repeat center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Irish Grover';
+    font-size: 22px;
+}
+
+/* translucent info panel */
+.infoPanel {
+    position: relative;
+    background-color: rgba(217, 217, 217, 0.89);
+    padding: 118px 32px 32px;
+    width: 800px;
+    height: 600px;
+}
+
+/* logout icon in top‐right */
+.logoutButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* each label/value pair */
+.field {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0 16px;
+}
+
+.label {
+    font-weight: 400;
+}
+
+.annoncesHeading {
+    cursor: pointer;
+    position: absolute;
+    bottom: 201px;
+    left: 50px;
+}
+
+.annoncesList {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    position: absolute;
+    bottom: 138px;
+    left: 50px;
+}
+
+/* history button */
+.historyButton {
+    position: absolute;
+    bottom: 100px;
+    right: 16px;
+    margin-top: 0;
+    padding: 12px 24px;
+    background-color: #d9a67a;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Irish Grover';
+    font-size: 20px;
+}
+
+/* error message */
+.error {
+    color: red;
+    margin-bottom: 16px;
+    text-align: center;
+}

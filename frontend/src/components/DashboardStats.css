@@ -1,0 +1,172 @@
+/* Conteneur principal */
+.dashboard-container {
+    padding: 2rem;
+    background: linear-gradient(to bottom right, #f0f8ff, #ffffff);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 1s ease-in-out;
+    display: flex;
+
+
+}
+
+.dashboard-stats {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Titre principal */
+.dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #111827;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Widgets - conteneur */
+.widgets-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Carte widget */
+.widget {
+    flex: 1 1 250px;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #ffffff;
+    cursor: pointer;
+}
+.widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Couleurs de widgets */
+.widget-blue {
+    background-color: #e0f2fe;
+    color: #1d4ed8;
+}
+.widget-green {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+.widget-red {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Contenu du widget */
+.widget h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+.widget p {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Conteneur des graphiques */
+.charts-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Box d’un graphique */
+.chart-box {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Titre d’un graphique */
+.chart-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1f2937;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+
+/* Boîte des alertes */
+.alerts-box {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Titre d’alerte */
+.alert-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #b91c1c;
+    border-left: 4px solid #b91c1c;
+    padding-left: 0.5rem;
+}
+
+/* Wrapper de tableau */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* Tableau d’alertes */
+.alert-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+/* En-têtes et cellules */
+.alert-table th,
+.alert-table td {
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+/* Alternance de lignes */
+.even-row {
+    background-color: #f9fafb;
+}
+.odd-row {
+    background-color: #ffffff;
+}
+
+/* Pas d’alertes */
+.no-alerts {
+    color: #6b7280;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .widgets-container {
+        flex-direction: column;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
