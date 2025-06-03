@@ -12,9 +12,11 @@ import ProprietaireDashboard from "./components/ProprietaireDashboard";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
+    const navigate = useNavigate();
 
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);  // L'utilisateur est connecté
+        navigate('/dashboard', { replace: true });
     };
 
     return (
