@@ -1,0 +1,54 @@
+.reclamation-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.reclamation-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.reclamation-card {
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-left: 5px solid #3498db;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.reclamation-card:hover {
+    transform: translateY(-2px);
+}
+
+.reclamation-card h3 {
+    margin-top: 20px;
+    color: #34495e;
+}
+
+.reclamation-card p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: #555;
+}
+
+.reclamation-card strong {
+    color: #2c3e50;
+}
+
+.reclamation-error {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+}
+
+.reclamation-loading {
+    text-align: center;
+    font-style: italic;
+    color: #7f8c8d;
+}

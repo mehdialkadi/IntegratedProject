@@ -1,0 +1,67 @@
+/* Conteneur principal */
+.create-annonce-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre */
+.create-annonce-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+/* Formulaire */
+.create-annonce-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Labels */
+.create-annonce-container label {
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 5px;
+}
+
+/* Inputs et textarea */
+.create-annonce-container input[type="text"],
+.create-annonce-container textarea,
+.create-annonce-container select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.create-annonce-container input:focus,
+.create-annonce-container textarea:focus,
+.create-annonce-container select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Bouton */
+.create-annonce-container button[type="submit"] {
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-annonce-container button[type="submit"]:hover {
+    background-color: #2980b9;
+}

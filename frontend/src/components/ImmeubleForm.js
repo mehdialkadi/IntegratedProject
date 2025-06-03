@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import './ImmeubleForm.css';
 axios.defaults.withCredentials = true;
 
 function ImmeubleForm() {
@@ -14,26 +14,26 @@ function ImmeubleForm() {
         nombreAppart: "",
         garage: false,
         nombrePlaceGarage: "",
-        aAscenceur: false,
+        aAscenseur: false, // corrigé ici
         aConcierge: false,
     });
 
+
     useEffect(() => {
         axios.get("/api/residencies")
-            .then(response => {
-                setResidencies(response.data);
-            })
+            .then(response => setResidencies(response.data))
             .catch(error => {
                 console.error("Erreur lors du chargement des résidences :", error);
+                setError("Erreur de chargement des résidences.");
             });
     }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [name]: type === "checkbox" ? checked : value
-        });
+        }));
     };
 
     const handleResidencyChange = (e) => {
@@ -42,36 +42,41 @@ function ImmeubleForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Vérification des données avant l'envoi
-        console.log("Données envoyées : ", formData);
+        setError(null);
 
         const payload = {
             ...formData,
-            residency: { id: selectedResidency },   // 🧠 envoyer residency sous forme d'objet avec id
-            syndic: { id: 1 } // 🧠 provisoire pour test : tu peux changer selon ton projet
+            residency: { id: selectedResidency },
+            syndic: { id: 1 } // à adapter selon ton contexte
         };
 
         axios.post("/api/immeubles", payload)
             .then(response => {
-                console.log("Immeuble ajouté avec succès :", response.data);
                 alert("Immeuble ajouté !");
-                setError(null); // Réinitialiser l'erreur
+                setFormData({
+                    nom: "",
+                    adresse: "",
+                    nombreAppart: "",
+                    garage: false,
+                    nombrePlaceGarage: "",
+                    aAscenseur: false,
+                    aConcierge: false,
+                });
+                setSelectedResidency("");
             })
             .catch(error => {
-                // Afficher l'objet complet de l'erreur pour le débogage
                 console.error("Erreur complète :", error);
-
                 if (error.response && error.response.data) {
-                    setError(`Erreur lors de l'ajout de l'immeuble : ${JSON.stringify(error.response.data)}`);
+                    setError(`Erreur : ${JSON.stringify(error.response.data)}`);
                 } else {
-                    setError("Erreur inconnue lors de l'ajout de l'immeuble.");
+                    setError("Erreur inconnue lors de l'ajout.");
                 }
             });
     };
 
     return (
-        <div>
+        <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
+            <h2>Ajouter un Immeuble</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nom :</label>
@@ -93,14 +98,16 @@ function ImmeubleForm() {
                     <input type="checkbox" name="garage" checked={formData.garage} onChange={handleChange} />
                 </div>
 
-                <div>
-                    <label>Nombre de places de garage :</label>
-                    <input type="number" name="nombrePlaceGarage" value={formData.nombrePlaceGarage} onChange={handleChange} />
-                </div>
+                {formData.garage && (
+                    <div>
+                        <label>Nombre de places de garage :</label>
+                        <input type="number" name="nombrePlaceGarage" value={formData.nombrePlaceGarage} onChange={handleChange} required />
+                    </div>
+                )}
 
                 <div>
                     <label>Ascenseur :</label>
-                    <input type="checkbox" name="aAscenceur" checked={formData.aAscenceur} onChange={handleChange} />
+                    <input type="checkbox" name="aAscenseur" checked={formData.aAscenseur} onChange={handleChange} />
                 </div>
 
                 <div>
@@ -112,19 +119,18 @@ function ImmeubleForm() {
                     <label>Résidence :</label>
                     <select value={selectedResidency} onChange={handleResidencyChange} required>
                         <option value="">-- Sélectionner une résidence --</option>
-                        {residencies.map(residency => (
-                            <option key={residency.id} value={residency.id}>
-                                {residency.nom}
+                        {residencies.map(res => (
+                            <option key={res.id} value={res.id}>
+                                {res.nom}
                             </option>
                         ))}
                     </select>
                 </div>
 
-                <button type="submit">Ajouter Immeuble</button>
+                <button type="submit" style={{ marginTop: "10px" }}>Ajouter Immeuble</button>
             </form>
 
-            {/* Afficher l'erreur si elle existe */}
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
         </div>
     );
 }

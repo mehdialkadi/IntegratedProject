@@ -1,0 +1,54 @@
+/* ResidencesList.css */
+
+/* Style des boutons */
+.button-style {
+    margin: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #ff5722; /* Couleur orange */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.button-style:hover {
+    background-color: #e64a19; /* Couleur orange foncé */
+}
+
+/* Style des détails */
+.details-style {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.details-style:hover {
+    background-color: #f1f1f1; /* Légère modification de la couleur au survol */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Style des titres */
+.details-style h3 {
+    font-size: 24px;
+    color: #007bff; /* Couleur bleu */
+    margin-bottom: 15px;
+}
+
+/* Style du texte dans les détails */
+.details-style p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Ajout d'une bordure bleue autour des détails */
+.details-style {
+    border: 1px solid #007bff; /* Bleu */
+}

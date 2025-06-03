@@ -1,114 +1,186 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ListeImmeubles.css'; // Assurez-vous que le chemin est correct selon la structure de votre projet
-
-axios.defaults.withCredentials = true;
 
 const ListeImmeubles = () => {
     const [immeubles, setImmeubles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
     const [editingImmeuble, setEditingImmeuble] = useState(null);
 
     useEffect(() => {
-        // Faire une requête GET pour récupérer les immeubles
-        axios.get('/api/immeubles')
-            .then((response) => {
-                setImmeubles(response.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                setError("Impossible de charger les immeubles.");
-                setLoading(false);
-            });
+        fetchImmeubles();
     }, []);
 
-    const handleDelete = (id) => {
-        axios.delete(`http://localhost:8080/api/immeubles/${id}`)
-            .then(() => {
-                setImmeubles(immeubles.filter((immeuble) => immeuble.id !== id));
-                setSuccess('Immeuble supprimé avec succès.');
-                setError('');
-            })
-            .catch(() => {
-                setError("Impossible de supprimer l'immeuble.");
-                setSuccess('');
-            });
+    const fetchImmeubles = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/immeubles');
+            setImmeubles(response.data);
+        } catch (err) {
+            setError('Impossible de charger les immeubles.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Voulez-vous vraiment supprimer cet immeuble ?")) {
+            try {
+                await axios.delete(`http://localhost:8080/api/immeubles/${id}`);
+                setImmeubles(immeubles.filter((imm) => imm.id !== id));
+            } catch (err) {
+                alert("Erreur lors de la suppression.");
+            }
+        }
     };
 
     const handleEdit = (immeuble) => {
-        setEditingImmeuble({ ...immeuble });
+        setEditingImmeuble({
+            ...immeuble,
+            garage: immeuble.garage ?? false,
+            aAscenseur: immeuble.aAscenseur ?? false,
+            aConcierge: immeuble.aConcierge ?? false
+        });
     };
 
-    const handleUpdate = (id, updatedImmeuble) => {
-        if (!updatedImmeuble.nom || !updatedImmeuble.adresse) {
-            setError("Tous les champs doivent être remplis.");
-            return;
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        const newValue = type === 'checkbox' ? checked : value;
+        setEditingImmeuble((prev) => ({ ...prev, [name]: newValue }));
+    };
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.put(
+                `http://localhost:8080/api/immeubles/${editingImmeuble.id}`,
+                editingImmeuble
+            );
+
+            // Mise à jour de l'état des immeubles avec la nouvelle version modifiée
+            setImmeubles((prevImmeubles) =>
+                prevImmeubles.map((imm) =>
+                    imm.id === editingImmeuble.id ? response.data : imm
+                )
+            );
+
+            // Réinitialiser l'immeuble en cours d'édition
+            setEditingImmeuble(null);
+        } catch (err) {
+            alert("Erreur lors de la mise à jour.");
         }
-
-        axios.put(`http://localhost:8080/api/immeubles/${id}`, updatedImmeuble)
-            .then((response) => {
-                setImmeubles((prevImmeubles) =>
-                    prevImmeubles.map((immeuble) =>
-                        immeuble.id === id ? response.data : immeuble
-                    )
-                );
-                setEditingImmeuble(null);
-                setSuccess('Immeuble mis à jour avec succès.');
-                setError('');
-            })
-            .catch((err) => {
-                setError("Impossible de mettre à jour l'immeuble. Détails : " + (err.response?.data?.message || err.message));
-                setSuccess('');
-            });
     };
 
-    if (loading) {
-        return <p>Chargement des immeubles...</p>;
-    }
+    if (loading) return <p>Chargement des immeubles...</p>;
+    if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
     return (
-        <div className="container">
-            <h2 className="title">Liste des Immeubles</h2>
-
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && <p style={{ color: 'green' }}>{success}</p>}
-
-            <ul className="list">
+        <div style={styles.container}>
+            <h2 style={styles.title}>Liste des Immeubles</h2>
+            <ul style={styles.list}>
                 {immeubles.map((immeuble) => (
-                    <li key={immeuble.id} className="listItem">
-                        {editingImmeuble && editingImmeuble.id === immeuble.id ? (
-                            <div>
-                                <h3>Modifier Immeuble</h3>
-                                <label>Nom:</label>
-                                <input
-                                    type="text"
-                                    value={editingImmeuble.nom}
-                                    onChange={(e) => setEditingImmeuble({ ...editingImmeuble, nom: e.target.value })}
-                                />
-                                <label>Adresse:</label>
-                                <input
-                                    type="text"
-                                    value={editingImmeuble.adresse}
-                                    onChange={(e) => setEditingImmeuble({ ...editingImmeuble, adresse: e.target.value })}
-                                />
-                                <button onClick={() => handleUpdate(immeuble.id, editingImmeuble)}>Mettre à jour</button>
-                                <button onClick={() => setEditingImmeuble(null)}>Annuler</button>
-                            </div>
-                        ) : (
-                            <div>
-                                <h3>{immeuble.nom}</h3>
-                                <p>Adresse: {immeuble.adresse}</p>
-                                <button onClick={() => handleEdit(immeuble)}>Modifier</button>
-                                <button onClick={() => handleDelete(immeuble.id)}>Supprimer</button>
-                            </div>
-                        )}
+                    <li key={immeuble.id} style={styles.listItem}>
+                        <h3>{immeuble.nom}</h3>
+                        <p><strong>Adresse:</strong> {immeuble.adresse}</p>
+                        <p><strong>Nombre d'appartements:</strong> {immeuble.nombreAppart}</p>
+                        <p><strong>Garage:</strong> {immeuble.garage ? "Oui" : "Non"}</p>
+                        <p><strong>Ascenseur:</strong> {immeuble.aAscenseur ? "Oui" : "Non"}</p>
+                        <p><strong>Concierge:</strong> {immeuble.aConcierge ? "Oui" : "Non"}</p>
+                        <button onClick={() => handleEdit(immeuble)} style={styles.buttonEdit}>Modifier</button>
+                        <button onClick={() => handleDelete(immeuble.id)} style={styles.buttonDelete}>Supprimer</button>
                     </li>
                 ))}
             </ul>
+
+            {editingImmeuble && (
+                <form onSubmit={handleUpdate} style={styles.form}>
+                    <h3>Modifier Immeuble</h3>
+                    <input
+                        type="text"
+                        name="nom"
+                        value={editingImmeuble.nom || ''}
+                        onChange={handleInputChange}
+                        placeholder="Nom"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="adresse"
+                        value={editingImmeuble.adresse || ''}
+                        onChange={handleInputChange}
+                        placeholder="Adresse"
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="nombreAppart"
+                        value={editingImmeuble.nombreAppart || ''}
+                        onChange={handleInputChange}
+                        placeholder="Nombre d'appartements"
+                        required
+                    />
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="garage"
+                            checked={editingImmeuble.garage || false}
+                            onChange={handleInputChange}
+                        /> Garage
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="aAscenseur"
+                            checked={editingImmeuble.aAscenseur || false}
+                            onChange={handleInputChange}
+                        /> Ascenseur
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="aConcierge"
+                            checked={editingImmeuble.aConcierge || false}
+                            onChange={handleInputChange}
+                        /> Concierge
+                    </label>
+                    <br /><br />
+                    <button type="submit" style={styles.buttonEdit}>Enregistrer</button>
+                    <button type="button" onClick={() => setEditingImmeuble(null)} style={styles.buttonDelete}>Annuler</button>
+                </form>
+            )}
         </div>
     );
+};
+
+const styles = {
+    container: { padding: '20px' },
+    title: { textAlign: 'center' },
+    list: { listStyleType: 'none', padding: 0 },
+    listItem: {
+        border: '1px solid #ddd',
+        padding: '10px',
+        marginBottom: '10px',
+        borderRadius: '5px',
+    },
+    buttonEdit: {
+        marginRight: '10px',
+        padding: '5px 10px',
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        border: 'none',
+        borderRadius: '3px',
+        cursor: 'pointer',
+    },
+    buttonDelete: {
+        padding: '5px 10px',
+        backgroundColor: '#f44336',
+        color: 'white',
+        border: 'none',
+        borderRadius: '3px',
+        cursor: 'pointer',
+    },
+    form: {
+        marginTop: '20px',
+    }
 };
 
 export default ListeImmeubles;

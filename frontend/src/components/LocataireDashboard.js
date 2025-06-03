@@ -73,7 +73,7 @@ const LocataireDashboard = () => {
                 </div>
                 <div className={styles.field}>
                     <span className={styles.label}>Étage</span>
-                    <span className={styles.value}>{logement.etage}</span> ème
+                    <span className={styles.value}>{logement.etage}</span>
                 </div>
                 <div className={styles.field}>
                     <span className={styles.label}>Propriétaire associé</span>
