@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { jsPDF } from "jspdf";
 
 function PaiementForm() {
     const [logements, setLogements] = useState([]);
@@ -14,28 +13,7 @@ function PaiementForm() {
             .then(response => setLogements(response.data));
     }, []);
 
-    const generatePDF = (paiementData) => {
-        if (!paiementData.logement) {
-            alert("Le logement sélectionné est invalide.");
-            return;
-        }
 
-        const doc = new jsPDF();
-
-        // Titre
-        doc.setFontSize(18);
-        doc.text("Détails du Paiement", 20, 20);
-
-        // Détails du paiement
-        doc.setFontSize(12);
-        doc.text(`Logement: ${paiementData.logement.numero} - Etage ${paiementData.logement.etage}`, 20, 30);
-        doc.text(`Montant: ${paiementData.montant} MAD`, 20, 40);
-        doc.text(`Date: ${paiementData.date}`, 20, 50);
-        doc.text(`Facture envoyée: ${paiementData.factureEnvoye ? "Oui" : "Non"}`, 20, 60);
-
-        // Sauvegarder le PDF
-        doc.save(`paiement_${paiementData.logement.numero}_${paiementData.date}.pdf`);
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -78,26 +56,9 @@ function PaiementForm() {
                 <button type="submit">Ajouter Paiement</button>
             </form>
 
-            {/* Bouton pour générer la facture PDF */}
-            <button
-                type="button"
-                onClick={() => {
-                    const logementData = logements.find(l => l.idLogement === idLogement);
-                    if (!logementData) {
-                        alert("Veuillez sélectionner un logement.");
-                        return;
-                    }
-                    generatePDF({
-                        montant,
-                        date,
-                        factureEnvoye,
-                        logement: logementData
-                    });
-                }}
-                disabled={!idLogement} // Désactive le bouton si aucun logement n'est sélectionné
-            >
-                Télécharger la facture PDF
-            </button>
+
+
+
         </div>
     );
 }

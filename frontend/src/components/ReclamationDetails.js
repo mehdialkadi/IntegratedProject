@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import './ReclamationList.css';
 function ReclamationDetails() {
     const [reclamations, setReclamations] = useState([]);
     const [error, setError] = useState(null);

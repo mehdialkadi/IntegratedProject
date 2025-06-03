@@ -20,7 +20,7 @@ public class SyndicProjectApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**")
-						.allowedOrigins("http://localhost:3004") // Corrigé ici
+						.allowedOrigins("http://localhost:3006") // Corrigé ici
 						.allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowedHeaders("*")
 						.allowCredentials(true);

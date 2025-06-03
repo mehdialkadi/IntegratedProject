@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './ResidencyDetails.css';
 
 function ResidencyDetails() {
     const [residencies, setResidencies] = useState([]);
@@ -36,49 +37,46 @@ function ResidencyDetails() {
 
     const handleLogementClick = (logement) => {
         setSelectedLogement(logement);
-        console.log("Détails du logement sélectionné:", logement);
     };
 
-    if (loading) return <div>Chargement...</div>;
-    if (error) return <div>{error}</div>;
+    if (loading) return <div className="loading">Chargement...</div>;
+    if (error) return <div className="error">{error}</div>;
 
     return (
-        <div>
-            <h1>Liste des Résidences</h1>
+        <div className="residency-container">
+            <h1 className="title">🏘️ Résidences</h1>
 
             {residencies.length === 0 ? (
                 <p>Aucune résidence trouvée.</p>
             ) : (
                 <div>
-                    {/* Liste des résidences */}
-                    <div>
+                    <div className="button-group">
                         {residencies.map((residence) => (
                             <button
                                 key={residence.id}
                                 onClick={() => handleResidenceClick(residence)}
-                                style={buttonStyle}
+                                className="residence-btn"
                             >
                                 {residence.nom}
                             </button>
                         ))}
                     </div>
 
-                    {/* Détails de la résidence sélectionnée */}
                     {selectedResidence && (
-                        <div style={detailsStyle}>
+                        <div className="card">
                             <h2>{selectedResidence.nom}</h2>
-                            <p>Adresse: {selectedResidence.adresse}</p>
+                            <p><strong>Adresse:</strong> {selectedResidence.adresse}</p>
 
-                            <h3>Immeubles:</h3>
+                            <h3>🏢 Immeubles</h3>
                             {selectedResidence.immeubles?.length > 0 ? (
-                                <ul>
+                                <ul className="item-list">
                                     {selectedResidence.immeubles.map((immeuble) => (
                                         <li key={immeuble.id}>
                                             <button
                                                 onClick={() => handleImmeubleClick(immeuble)}
-                                                style={buttonStyle}
+                                                className="item-btn"
                                             >
-                                                {immeuble.nom} - {immeuble.adresse}
+                                                {immeuble.nom} – {immeuble.adresse}
                                             </button>
                                         </li>
                                     ))}
@@ -89,27 +87,26 @@ function ResidencyDetails() {
                         </div>
                     )}
 
-                    {/* Détails de l'immeuble sélectionné */}
                     {selectedImmeuble && (
-                        <div style={detailsStyle}>
+                        <div className="card">
                             <h3>{selectedImmeuble.nom}</h3>
-                            <p>Adresse: {selectedImmeuble.adresse}</p>
-                            <p>Nombre d'appartements: {selectedImmeuble.nombreAppart}</p>
-                            <p>Garage: {selectedImmeuble.garage ? 'Disponible' : 'Non disponible'}</p>
-                            <p>Nombre de places: {selectedImmeuble.nombrePlaceGarage}</p>
-                            <p>Ascenseur: {selectedImmeuble.aAscenceur ? 'Présent' : 'Absent'}</p>
-                            <p>Concierge: {selectedImmeuble.aConcierge ? 'Présent' : 'Absent'}</p>
+                            <p><strong>Adresse:</strong> {selectedImmeuble.adresse}</p>
+                            <p><strong>Appartements:</strong> {selectedImmeuble.nombreAppart}</p>
+                            <p><strong>Garage:</strong> {selectedImmeuble.garage ? '✔️' : '❌'}</p>
+                            <p><strong>Places garage:</strong> {selectedImmeuble.nombrePlaceGarage}</p>
+                            <p><strong>Ascenseur:</strong> {selectedImmeuble.aAscenceur ? '✔️' : '❌'}</p>
+                            <p><strong>Concierge:</strong> {selectedImmeuble.aConcierge ? '✔️' : '❌'}</p>
 
-                            <h4>Logements:</h4>
+                            <h4>🏠 Logements</h4>
                             {selectedImmeuble.logements?.length > 0 ? (
-                                <ul>
+                                <ul className="item-list">
                                     {selectedImmeuble.logements.map((logement) => (
                                         <li key={logement.idLogement}>
                                             <button
                                                 onClick={() => handleLogementClick(logement)}
-                                                style={buttonStyle}
+                                                className="item-btn"
                                             >
-                                                Logement {logement.numero} - Étage {logement.etage}
+                                                N° {logement.numero} – Étage {logement.etage}
                                             </button>
                                         </li>
                                     ))}
@@ -120,29 +117,18 @@ function ResidencyDetails() {
                         </div>
                     )}
 
-                    {/* Détails du logement sélectionné */}
                     {selectedLogement && (
-                        <div style={detailsStyle}>
-                            <h4>Logement {selectedLogement.numero} (Étage {selectedLogement.etage})</h4>
-                            <p>Charge mensuelle: {selectedLogement.montantChargeMensuelle} MAD</p>
-                            <p>
-                                Propriétaire :{" "}
-                                {selectedLogement.proprietaire?.nom
-                                    ? `${selectedLogement.proprietaire.nom} ${selectedLogement.proprietaire.prenom}`
-                                    : "Non spécifié"}
-                            </p>
-                            <p>
-                                Locataire :{" "}
-                                {selectedLogement.locataire?.nom
-                                    ? `${selectedLogement.locataire.nom} ${selectedLogement.locataire.prenom}`
-                                    : "Non spécifié"}
-                            </p>
-                            <p>
-                                Place de garage :{" "}
-                                {selectedLogement.placeGarage?.numero
-                                    ? `N° ${selectedLogement.placeGarage.numero}`
-                                    : "Aucune"}
-                            </p>
+                        <div className="card">
+                            <h4>🔑 Logement N°{selectedLogement.numero} (Étage {selectedLogement.etage})</h4>
+                            <p><strong>Charge mensuelle:</strong> {selectedLogement.montantChargeMensuelle} MAD</p>
+                            <p><strong>Propriétaire:</strong> {selectedLogement.proprietaire?.nom
+                                ? `${selectedLogement.proprietaire.nom} ${selectedLogement.proprietaire.prenom}`
+                                : "Non spécifié"}</p>
+                            <p><strong>Locataire:</strong> {selectedLogement.locataire?.nom
+                                ? `${selectedLogement.locataire.nom} ${selectedLogement.locataire.prenom}`
+                                : "Non spécifié"}</p>
+                            <p><strong>Place de garage:</strong> {selectedLogement.placeGarage?.numero
+                                ? `N° ${selectedLogement.placeGarage.numero}` : "Aucune"}</p>
                         </div>
                     )}
                 </div>
@@ -150,27 +136,5 @@ function ResidencyDetails() {
         </div>
     );
 }
-
-const buttonStyle = {
-    margin: '10px',
-    padding: '10px 20px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    backgroundColor: '#007BFF',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-    transition: 'all 0.3s ease',
-};
-
-const detailsStyle = {
-    marginTop: '20px',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '5px',
-    backgroundColor: '#f9f9f9',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-};
 
 export default ResidencyDetails;

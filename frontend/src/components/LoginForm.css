@@ -1,3 +1,4 @@
+/* Import Font Awesome depuis CDN dans index.html */
 body {
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     margin: 0;
@@ -8,11 +9,11 @@ body {
     max-width: 420px;
     margin: 100px auto;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    color: #fff;
     text-align: center;
     transition: transform 0.3s ease;
 }
@@ -39,7 +40,7 @@ body {
 }
 
 .input-group {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     text-align: left;
 }
 
@@ -55,9 +56,18 @@ body {
     position: relative;
 }
 
+.input-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #90caf9;
+    font-size: 16px;
+}
+
 .input-wrapper input {
     width: 100%;
-    padding: 12px 40px 12px 40px;
+    padding: 12px 40px 12px 36px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
@@ -73,25 +83,23 @@ body {
 
 .input-wrapper input:focus {
     border-color: #4facfe;
-    box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);
+    box-shadow: 0 0 10px rgba(79, 172, 254, 0.6);
 }
 
-.input-icon,
 .toggle-password {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #b0bec5;
-}
-
-.input-icon {
-    left: 12px;
-}
-
-.toggle-password {
     right: 12px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #90caf9;
     cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #ffffff;
 }
 
 button[type="submit"] {
@@ -104,12 +112,13 @@ button[type="submit"] {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.4s ease, transform 0.2s ease;
+    transition: background 0.4s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button[type="submit"]:hover {
     background: linear-gradient(to right, #00c6ff, #0072ff);
     transform: scale(1.03);
+    box-shadow: 0 0 10px #4facfe;
 }
 
 button[type="submit"]:active {
@@ -118,7 +127,7 @@ button[type="submit"]:active {
 
 .login-container p {
     margin-top: 18px;
-    color: #ff976b;
+    color: #ffb366;
     font-weight: bold;
     font-size: 14px;
     transition: opacity 0.3s ease;

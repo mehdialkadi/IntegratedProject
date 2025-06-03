@@ -1,86 +1,170 @@
+/* Container principal */
 .annonces-container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fafafa;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
 }
 
+/* Titre principal */
 .annonces-title {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 2rem;
     color: #333;
+    margin-bottom: 30px;
 }
 
+/* Liste des annonces */
 .annonces-list {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
+/* Élément individuel d'annonce */
 .annonce-item {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 15px;
-    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    border: 1px solid #e0e0e0;
 }
 
-.annonce-form input,
-.annonce-form textarea,
-.annonce-form select {
-    display: block;
-    width: 100%;
-    margin: 8px 0;
-    padding: 8px;
-    font-size: 16px;
-}
-
-.annonce-form textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-
+/* Détails de l'annonce */
 .annonce-details h3 {
     margin: 0;
+    font-size: 1.4rem;
     color: #2c3e50;
 }
 
 .annonce-details p {
-    margin: 4px 0;
+    margin: 8px 0;
+    color: #555;
 }
 
+/* Formulaire d'édition */
+.annonce-form input,
+.annonce-form textarea,
+.annonce-form select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.annonce-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Groupe de boutons */
 .button-group {
-    margin-top: 10px;
     display: flex;
     gap: 10px;
+    margin-top: 10px;
 }
 
 .btn {
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 10px 16px;
+    font-size: 0.95rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .btn-save {
-    background-color: #28a745;
+    background-color: #27ae60;
     color: white;
+}
+
+.btn-save:hover {
+    background-color: #1e8449;
 }
 
 .btn-cancel {
-    background-color: #6c757d;
+    background-color: #95a5a6;
     color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #7f8c8d;
 }
 
 .btn-edit {
-    background-color: #007bff;
+    background-color: #3498db;
     color: white;
 }
 
+.btn-edit:hover {
+    background-color: #2980b9;
+}
+
 .btn-delete {
-    background-color: #dc3545;
+    background-color: #e74c3c;
     color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+/* Formulaire de création */
+form {
+    background-color: #fefefe;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    margin-top: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #333;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+form button[type="submit"] {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #2ecc71;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #27ae60;
 }

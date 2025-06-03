@@ -12,10 +12,18 @@ const DashboardStats = () => {
     const [paiements, setPaiements] = useState([]);
     const [filter, setFilter] = useState("all");
 
+    // Nouvel état pour total factures
+    const [totalFactures, setTotalFactures] = useState(0);
+
     useEffect(() => {
         axios.get("http://localhost:8080/api/paiements")
             .then(res => setPaiements(res.data))
             .catch(err => console.error(err));
+
+        // Charger le total des factures
+        axios.get("http://localhost:8080/api/factures-immeuble/count")
+            .then(res => setTotalFactures(res.data))
+            .catch(err => console.error("Erreur total factures :", err));
     }, []);
 
     const filteredPaiements = useMemo(() => {
@@ -89,6 +97,9 @@ const DashboardStats = () => {
                     </div>
 
                     <div className="widgets-container">
+                        {/* Widget ajouté pour le total factures */}
+                        <Widget title="Nombre total de factures" value={totalFactures} type="blue" />
+
                         <Widget title="Total Paiements" value={`${totalPaiements} MAD`} type="blue" />
                         <Widget title="Nombre de Paiements" value={filteredPaiements.length} type="green" />
                         <Widget title="Total Factures envoyées" value={`${totalFacturesEnvoyees} MAD`} type="red" />
@@ -99,6 +110,7 @@ const DashboardStats = () => {
                 </div>
 
                 <div className="charts-container">
+                    {/* Tes graphiques ici */}
                     <div className="chart-box">
                         <h2 className="chart-title">Évolution des paiements</h2>
                         <ResponsiveContainer width="100%" height={300}>

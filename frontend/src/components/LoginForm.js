@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
+import './LoginForm.css'; // Import du CSS avec styles + icônes
 
 const LoginForm = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
-    // Fonction pour gérer la soumission du formulaire
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Vérifier que les champs ne sont pas vides
         if (!email || !password) {
             setMessage('Veuillez remplir tous les champs');
             return;
         }
 
-        // Vérification que l'email et le mot de passe sont corrects
         if (email === 'syndic@gmail.com' && password === 'syndic') {
             setMessage('Connexion réussie');
-            onLoginSuccess();  // Appel de la fonction onLoginSuccess pour mettre à jour isLoggedIn
+            onLoginSuccess();
         } else {
             setMessage('Email ou mot de passe incorrect');
         }
@@ -29,31 +28,42 @@ const LoginForm = ({ onLoginSuccess }) => {
             <h2>Connexion Syndic</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="email">Email :</label>
+                    <div className="input-wrapper">
+                        <i className="fas fa-envelope"></i>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="ex: syndic@gmail.com"
+                            required
+                        />
+                    </div>
                 </div>
 
                 <div className="input-group">
-                    <label htmlFor="password">Mot de passe:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="password">Mot de passe :</label>
+                    <div className="input-wrapper">
+                        <i className="fas fa-lock"></i>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="ex: syndic"
+                            required
+                        />
+                        <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
+              <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+            </span>
+                    </div>
                 </div>
 
                 <button type="submit">Se connecter</button>
             </form>
 
-            {message && <p>{message}</p>}  {/* Affichage du message de connexion */}
+            {message && <p>{message}</p>}
         </div>
     );
 };

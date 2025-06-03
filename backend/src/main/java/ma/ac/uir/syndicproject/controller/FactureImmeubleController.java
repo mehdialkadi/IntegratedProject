@@ -16,6 +16,11 @@ public class FactureImmeubleController {
 
     @Autowired
     private FactureImmeubleService factureService;
+    // 🔵 Renvoyer le nombre total de factures
+    @GetMapping("/count")
+    public Long countFactures() {
+        return factureService.countFactures();
+    }
 
     // 🔵 Récupérer toutes les factures
     @GetMapping

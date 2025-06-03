@@ -1,5 +1,6 @@
 package ma.ac.uir.syndicproject.service;
 
+import io.micrometer.core.instrument.Counter;
 import ma.ac.uir.syndicproject.model.DocumentCommun;
 import ma.ac.uir.syndicproject.model.FactureImmeuble;
 import ma.ac.uir.syndicproject.model.Immeuble;
@@ -25,6 +26,10 @@ public class FactureImmeubleService {
 
     public FactureImmeuble getFactureById(Long id) {
         return factureRepository.findById(id).orElse(null);
+    }
+    public Long countFactures() {
+        Counter factureImmeubleRepository = null;
+        return (long) factureImmeubleRepository.count();
     }
 
     public FactureImmeuble createFacturePourImmeuble(Long immeubleId, FactureImmeuble facture) {

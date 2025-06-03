@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './ReclamationList.css';
 
 function ReclamationList() {
     const [reclamations, setReclamations] = useState([]);
@@ -22,13 +23,13 @@ function ReclamationList() {
     }, []);
 
     return (
-        <div>
+        <div className="reclamation-container">
             <h2>Liste des Réclamations</h2>
-            {error && <p style={{ color: "red" }}>⚠ {error}</p>}
-            {!error && reclamations.length === 0 && <p>Chargement...</p>}
+            {error && <p className="reclamation-error">⚠ {error}</p>}
+            {!error && reclamations.length === 0 && <p className="reclamation-loading">Chargement...</p>}
 
             {reclamations.map((rec) => (
-                <div key={rec.id} style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
+                <div key={rec.id} className="reclamation-card">
                     <p><strong>ID :</strong> {rec.id}</p>
                     <p><strong>Titre :</strong> {rec.titre}</p>
                     <p><strong>Description :</strong> {rec.description}</p>
