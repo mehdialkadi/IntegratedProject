@@ -20,12 +20,12 @@ function App() {
     return (
             <Routes>
                 {/* public home */}
-                <Route path="/" element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />} />
+                <Route path="/" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
 
                 {/* login route */}
                 <Route
                     path="/login"
-                    element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />}
+                    element={<LoginForm onLoginSuccess={handleLoginSuccess} />}
                 />
 
                 {/* protected dashboard */}
@@ -33,7 +33,7 @@ function App() {
                     path="/dashboard"
                     element={
                         isLoggedIn
-                            ? <ProprietaireDashboard />
+                            ? <Dashboard />
                             : <Navigate to="/login" replace />
                     }
                 />
