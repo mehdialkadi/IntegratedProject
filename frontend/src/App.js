@@ -9,6 +9,11 @@ import LocataireReclamations from "./components/LocataireReclamations";
 import LocataireCreateReclamation from "./components/LocataireCreateReclamation";
 import LoginFormProprietaire from "./components/LoginFormProprietaire";
 import ProprietaireDashboard from "./components/ProprietaireDashboard";
+import ProprietaireAnnonces from "./components/ProprietaireAnnonces";
+import ProprietaireReunionsPage from "./components/ProprietaireReunionsPage";
+import ProprietaireDocumentsCommuns from "./components/ProprietaireDocumentsCommuns";
+import ProprietaireReclamations from "./components/ProprietaireReclamations";
+import ProprietaireCreateReclamation from "./components/ProprietaireCreateReclamation";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
@@ -22,12 +27,12 @@ function App() {
     return (
             <Routes>
                 {/* public home */}
-                <Route path="/" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
+                <Route path="/" element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />} />
 
                 {/* login route */}
                 <Route
                     path="/login"
-                    element={<LoginForm onLoginSuccess={handleLoginSuccess} />}
+                    element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />}
                 />
 
                 {/* protected dashboard */}
@@ -35,7 +40,7 @@ function App() {
                     path="/dashboard"
                     element={
                         isLoggedIn
-                            ? <Dashboard />
+                            ? <ProprietaireDashboard />
                             : <Navigate to="/login" replace />
                     }
                 />
@@ -45,6 +50,16 @@ function App() {
                 <Route path="/locataireReclamations" element={<LocataireReclamations />} />
 
                 <Route path="/locataireCreateReclamation" element={<LocataireCreateReclamation />} />
+
+                <Route path="/ProprioAnnonces" element={<ProprietaireAnnonces />} />
+
+                <Route path="/ProprioReunions" element={<ProprietaireReunionsPage />} />
+
+                <Route path="/ProprioDocuments" element={<ProprietaireDocumentsCommuns />} />
+
+                <Route path="/ProprioReclamations" element={<ProprietaireReclamations />} />
+
+                <Route path="/ProprioCreateReclamation" element={<ProprietaireCreateReclamation />} />
 
                 {/* fallback 404 */}
                 <Route path="*" element={<h1>404 – Page non trouvée</h1>} />
