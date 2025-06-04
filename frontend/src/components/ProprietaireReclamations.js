@@ -14,7 +14,7 @@ export default function ProprietaireReclamations() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('/api/reclamations/getReclamationsByProprio')
+        axios.get('/api/reclamations/getReclamationsByLogement')
             .then(({ data }) => setReclamations(data))
             .catch(err => setError(err.response?.data?.message || err.message))
             .finally(() => setLoading(false));

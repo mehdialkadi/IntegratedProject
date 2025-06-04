@@ -14,6 +14,9 @@ import ProprietaireReunionsPage from "./components/ProprietaireReunionsPage";
 import ProprietaireDocumentsCommuns from "./components/ProprietaireDocumentsCommuns";
 import ProprietaireReclamations from "./components/ProprietaireReclamations";
 import ProprietaireCreateReclamation from "./components/ProprietaireCreateReclamation";
+import ProprietaireLogement from "./components/ProprietaireLogement";
+import ProprietairePaiments from "./components/ProprietairePaiments";
+import ProprietaireFacture from "./components/ProprietaireFacture";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
@@ -27,12 +30,12 @@ function App() {
     return (
             <Routes>
                 {/* public home */}
-                <Route path="/" element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />} />
+                <Route path="/" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
 
                 {/* login route */}
                 <Route
                     path="/login"
-                    element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />}
+                    element={<LoginForm onLoginSuccess={handleLoginSuccess} />}
                 />
 
                 {/* protected dashboard */}
@@ -40,7 +43,7 @@ function App() {
                     path="/dashboard"
                     element={
                         isLoggedIn
-                            ? <ProprietaireDashboard />
+                            ? <Dashboard />
                             : <Navigate to="/login" replace />
                     }
                 />
@@ -60,6 +63,12 @@ function App() {
                 <Route path="/ProprioReclamations" element={<ProprietaireReclamations />} />
 
                 <Route path="/ProprioCreateReclamation" element={<ProprietaireCreateReclamation />} />
+
+                <Route path="/ProprioLogement/:logementId" element={<ProprietaireLogement />} />
+
+                <Route path="/ProprioPaiments" element={<ProprietairePaiments />} />
+
+                <Route path="/ProprioFactures" element={<ProprietaireFacture />} />
 
                 {/* fallback 404 */}
                 <Route path="*" element={<h1>404 – Page non trouvée</h1>} />

@@ -72,23 +72,23 @@ export default function ProprietaireDashboard() {
                         Documents communs
                     </button>
                     <button
+                        className={styles.docsButton}
+                        onClick={() => navigate('/ProprioFactures')}
+                    >
+                        Factures de l'immeuble
+                    </button>
+                    <button
                         className={styles.reunionsButton}
                         onClick={() => navigate('/ProprioReunions')}
                     >
                         Réunions
                     </button>
-                    <button
-                        className={styles.reclamationButton}
-                        onClick={() => navigate('/ProprioReclamations')}
-                    >
-                        Historique des réclamations
-                    </button>
                 </div>
 
                 {/* Logements Cards */}
                 <div className={styles.logementsContainer}>
-                {logements.map(log => (
-                        <div key={log.id} className={styles.logementCard} onClick={() => navigate(`/logement/${log.id}`)}>
+                    {logements.map(log => (
+                        <div key={log.id} className={styles.logementCard} onClick={() => navigate(`/ProprioLogement/${log.idLogement}`)}>
                             <p><strong>N° Logement :</strong> {log.numero}</p>
                             <p><strong>Étage :</strong> {log.etage}</p>
                             <p><strong>Charges :</strong> {log.montantChargeMensuelle} MAD</p>

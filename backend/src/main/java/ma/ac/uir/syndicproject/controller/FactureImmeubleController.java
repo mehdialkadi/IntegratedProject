@@ -1,14 +1,20 @@
 package ma.ac.uir.syndicproject.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
-import ma.ac.uir.syndicproject.model.DocumentCommun;
 import ma.ac.uir.syndicproject.model.FactureImmeuble;
 import ma.ac.uir.syndicproject.model.Proprietaire;
 import ma.ac.uir.syndicproject.service.FactureImmeubleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/factures-immeuble")
@@ -53,5 +59,23 @@ public class FactureImmeubleController {
     public List<FactureImmeuble> getFactureByImmeuble(HttpSession session) {
         Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
         return factureService.findByImmeubleId(me.getLogements().get(0).getImmeuble().getId());
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadDocument(@PathVariable Long id) throws IOException {
+        FactureImmeuble doc = factureService.getFactureById(id);
+
+        Resource resource = factureService.loadFileAsResource(doc.getUrlFichier());
+
+        String contentType = switch (doc.getType().toLowerCase()) {
+            case "pdf" -> MediaType.APPLICATION_PDF_VALUE;
+            case "excel" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            case "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            default -> MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        };
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getUrlFichier() + "\"")
+                .body(resource);
     }
 }

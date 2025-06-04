@@ -69,7 +69,6 @@ public class DocumentCommunController {
             case "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
             default -> MediaType.APPLICATION_OCTET_STREAM_VALUE;
         };
-        System.out.println(doc.getUrlFichier());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getUrlFichier() + "\"")
