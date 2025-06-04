@@ -1,3 +1,27 @@
+/* full-screen background */
+.dashboardContainer {
+    background: url('../assets/background.png') no-repeat center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Irish Grover';
+    font-size: 22px;
+}
+
+/* translucent panel */
+.infoPanel {
+    position: relative;
+    background-color: rgba(217, 217, 217, 0.89);
+    width: 900px;
+    max-height: 700px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
 .container {
     max-width: 900px;
     margin: 40px auto;

@@ -42,36 +42,40 @@ export default function ProprietaireDocumentsCommuns() {
     if (error)   return <div className={styles.error}>Erreur : {error}</div>;
 
     return (
-        <div className={styles.container}>
-            <h2>Documents Communs</h2>
-            <table className={styles.table}>
-                <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Type de fichier</th>
-                    <th>Télécharger</th>
-                </tr>
-                </thead>
-                <tbody>
-                {documents.map(doc => (
-                    <tr key={doc.id}>
-                        <td>{doc.nom}</td>
-                        <td>{doc.type || '—'}</td>
-                        <td>
-                            <button
-                                className={styles.downloadButton}
-                                onClick={() => downloadFile(doc)}
-                            >
-                                Télécharger
-                            </button>
-                        </td>
+        <div className={styles.dashboardContainer}>
+            <div className={styles.infoPanel}>
+                <h2>Documents Communs</h2>
+                <table className={styles.table}>
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Type de fichier</th>
+                        <th>Télécharger</th>
                     </tr>
-                ))}
-                {documents.length === 0 && (
-                    <tr><td colSpan="3" style={{textAlign:'center'}}>Aucun document disponible</td></tr>
-                )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {documents.map(doc => (
+                        <tr key={doc.id}>
+                            <td>{doc.nom}</td>
+                            <td>{doc.type || '—'}</td>
+                            <td>
+                                <button
+                                    className={styles.downloadButton}
+                                    onClick={() => downloadFile(doc)}
+                                >
+                                    Télécharger
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    {documents.length === 0 && (
+                        <tr>
+                            <td colSpan="3" style={{textAlign: 'center'}}>Aucun document disponible</td>
+                        </tr>
+                    )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
