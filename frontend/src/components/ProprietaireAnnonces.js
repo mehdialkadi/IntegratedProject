@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";  // reuse the same styles
 
 axios.defaults.withCredentials = true;
 
-const LocataireAnnonces = () => {
+const ProprietaireAnnonces = () => {
     const [annonces, setAnnonces] = useState([]);
     const [loading,  setLoading]  = useState(true);
     const [error,    setError]    = useState(null);
@@ -15,7 +15,7 @@ const LocataireAnnonces = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/api/annonces/getAllImmeubleAnnoncesForLocataire')
+        axios.get('/api/annonces/getAllImmeubleAnnoncesForProprio')
             .then(({ data }) => setAnnonces(data))
             .catch(err => setError(err.response?.data?.message || err.message))
             .finally(() => setLoading(false));
@@ -48,4 +48,4 @@ const LocataireAnnonces = () => {
     );
 };
 
-export default LocataireAnnonces;
+export default ProprietaireAnnonces;

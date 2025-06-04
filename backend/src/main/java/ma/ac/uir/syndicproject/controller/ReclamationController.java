@@ -73,12 +73,18 @@ public class ReclamationController {
     @GetMapping("/getReclamationsByLocataire")
     public List<Reclamation> getReclamationsByLocataire(HttpSession session) {
         Locataire me = (Locataire) session.getAttribute("currentUser");
-        return reclamationService.findByLocataire(me.getId());
+        return reclamationService.findByUtilisateur(me.getId());
     }
 
     @GetMapping("/getReclamationsByLogement")
     public List<Reclamation> getReclamationsByLogement(HttpSession session) {
         Logement log = (Logement) session.getAttribute("currentLogement");
         return reclamationService.findByLogement(log.getIdLogement());
+    }
+
+    @GetMapping("/getReclamationsByProprio")
+    public List<Reclamation> getReclamationsByProprio(HttpSession session) {
+        Proprietaire me = (Proprietaire) session.getAttribute("currentUser");
+        return reclamationService.findByUtilisateur(me.getId());
     }
 }

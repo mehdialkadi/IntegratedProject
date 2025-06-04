@@ -30,7 +30,7 @@ public class ReclamationService {
         reclamationRepository.deleteById(id);
     }
 
-    public List<Reclamation> findByLocataire(Long locataireId) {return reclamationRepository.findByUtilisateurId(locataireId);}
+    public List<Reclamation> findByUtilisateur(Long locataireId) {return reclamationRepository.findByUtilisateurId(locataireId);}
 
     public List<Reclamation> findByLogement(Long logementId) {return reclamationRepository.findByLogementIdLogement(logementId);}
 }

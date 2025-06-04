@@ -62,6 +62,13 @@ public class AnnonceController {
         return annonceService.findTodayTitlesByImmeubleId(immeubleId);
     }
 
+    @GetMapping("/getAllImmeubleAnnoncesForLocataire")
+    public List<Annonce> getAllImmeubleAnnoncesForLocataire(HttpSession session) {
+        Locataire me = (Locataire) session.getAttribute("currentUser");
+
+        return annonceService.getAllImmeubleAnnonces(me.getLogement().getImmeuble().getId());
+    }
+
     @GetMapping("/getLastThreeAnnonceForProprio")
     public List<String> getLastThreeAnnonceForProprio(HttpSession session) {
         Proprietaire me = (Proprietaire) session.getAttribute("currentUser");

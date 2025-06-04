@@ -31,5 +31,7 @@ public class ReunionService {
         reunionRepository.deleteById(id);
     }
 
-    public List<Reunion> findByImmeubleId(Long immeubleId) {return reunionRepository.findByImmeubleId(immeubleId);}
+    public List<Reunion> findByImmeubleId(Long immeubleId) {
+        return reunionRepository.findUpcomingByImmeubleIdNative(immeubleId);
+    }
 }

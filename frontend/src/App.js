@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import LoginForm from './components/LoginForm';  // Import du composant Login
-<<<<<<< HEAD
-import Dashboard from './components/Dashboard';  // Import du Dashboard
-=======
 import Dashboard from './components/Dashboard';
 import { BrowserRouter, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import LocataireAnnonces from "./components/LocataireAnnonces";
@@ -12,25 +9,22 @@ import LocataireReclamations from "./components/LocataireReclamations";
 import LocataireCreateReclamation from "./components/LocataireCreateReclamation";
 import LoginFormProprietaire from "./components/LoginFormProprietaire";
 import ProprietaireDashboard from "./components/ProprietaireDashboard";
->>>>>>> 33a274518afa793a1d777033c1bf2ac3f46dbac4
+import ProprietaireAnnonces from "./components/ProprietaireAnnonces";
+import ProprietaireReunionsPage from "./components/ProprietaireReunionsPage";
+import ProprietaireDocumentsCommuns from "./components/ProprietaireDocumentsCommuns";
+import ProprietaireReclamations from "./components/ProprietaireReclamations";
+import ProprietaireCreateReclamation from "./components/ProprietaireCreateReclamation";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // état pour gérer la connexion
+    const navigate = useNavigate();
 
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);  // L'utilisateur est connecté
+        navigate('/dashboard', { replace: true });
     };
 
     return (
-<<<<<<< HEAD
-        <div className="App">
-            {isLoggedIn ? (
-                <Dashboard />  // Afficher le Dashboard après connexion
-            ) : (
-                <LoginForm onLoginSuccess={handleLoginSuccess} />  // Afficher le formulaire de connexion
-            )}
-        </div>
-=======
             <Routes>
                 {/* public home */}
                 <Route path="/" element={<LoginFormProprietaire onLoginSuccess={handleLoginSuccess} />} />
@@ -57,10 +51,19 @@ function App() {
 
                 <Route path="/locataireCreateReclamation" element={<LocataireCreateReclamation />} />
 
+                <Route path="/ProprioAnnonces" element={<ProprietaireAnnonces />} />
+
+                <Route path="/ProprioReunions" element={<ProprietaireReunionsPage />} />
+
+                <Route path="/ProprioDocuments" element={<ProprietaireDocumentsCommuns />} />
+
+                <Route path="/ProprioReclamations" element={<ProprietaireReclamations />} />
+
+                <Route path="/ProprioCreateReclamation" element={<ProprietaireCreateReclamation />} />
+
                 {/* fallback 404 */}
                 <Route path="*" element={<h1>404 – Page non trouvée</h1>} />
             </Routes>
->>>>>>> 33a274518afa793a1d777033c1bf2ac3f46dbac4
     );
 }
 

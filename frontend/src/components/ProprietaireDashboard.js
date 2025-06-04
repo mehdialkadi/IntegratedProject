@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaArrowLeft } from 'react-icons/fa';
+import {FaArrowLeft, FaSignOutAlt} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProprietaireDashboard.module.css';
 
@@ -40,6 +40,17 @@ export default function ProprietaireDashboard() {
     if (loading) return <div className={styles.loading}>Chargement…</div>;
     if (error)   return <div className={styles.error}>Erreur : {error}</div>;
 
+    const handleLogOut = () => {
+        axios.post('/api/locataires/logout', {}, { withCredentials: true })
+            .then(() => {
+                // redirect after logout
+                navigate('/login', { replace: true });
+            })
+            .catch(err => {
+                console.error('Logout failed', err);
+            });
+    }
+
     return (
         <div className={styles.dashboardContainer}>
             <div className={styles.infoPanel}>
@@ -47,31 +58,37 @@ export default function ProprietaireDashboard() {
                 {/* Back Button */}
                 <button
                     className={styles.backButton}
-                    onClick={() => navigate(-1)}
+                    onClick={handleLogOut}
                 >
-                    <FaArrowLeft /> Retour
+                    <FaSignOutAlt size={24}/>
                 </button>
 
                 {/* Documents & Réunions Buttons */}
                 <div className={styles.topButtons}>
                     <button
                         className={styles.docsButton}
-                        //onClick={() => navigate('/documents')}
+                        onClick={() => navigate('/ProprioDocuments')}
                     >
                         Documents communs
                     </button>
                     <button
                         className={styles.reunionsButton}
-                        //onClick={() => navigate('/reunions')}
+                        onClick={() => navigate('/ProprioReunions')}
                     >
                         Réunions
+                    </button>
+                    <button
+                        className={styles.reclamationButton}
+                        onClick={() => navigate('/ProprioReclamations')}
+                    >
+                        Historique des réclamations
                     </button>
                 </div>
 
                 {/* Logements Cards */}
                 <div className={styles.logementsContainer}>
-                    {logements.map(log => (
-                        <div key={log.id} className={styles.logementCard}>
+                {logements.map(log => (
+                        <div key={log.id} className={styles.logementCard} onClick={() => navigate(`/logement/${log.id}`)}>
                             <p><strong>N° Logement :</strong> {log.numero}</p>
                             <p><strong>Étage :</strong> {log.etage}</p>
                             <p><strong>Charges :</strong> {log.montantChargeMensuelle} MAD</p>
@@ -88,7 +105,7 @@ export default function ProprietaireDashboard() {
                 {/* Annonces Section */}
                 <h3
                     className={styles.annoncesHeading}
-                    onClick={() => navigate('/locataireAnnonces')}
+                    onClick={() => navigate('/ProprioAnnonces')}
                 >
                     Annonces :
                 </h3>
